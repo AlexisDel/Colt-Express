@@ -4,8 +4,8 @@ import engine.utils.Direction;
 
 public class Character extends Entity{
 
-    Character(Train t, int abs, int ord){
-        super(t,abs,ord);
+    Character(String id, Train t, int abs, int ord){
+        super(id,t,abs,ord);
     }
 
     public void move(Direction direction){
@@ -16,7 +16,7 @@ public class Character extends Entity{
             case LEFT -> {if(this.x>0){this.x--;
                 System.out.println( "motherfucker took his left");}
             }
-            case RIGHT -> {if(this.x<this.train.get_NB_WAGONS()){this.x++;
+            case RIGHT -> {if(this.x<this.train.getTrainLength()-1){this.x++;
                 System.out.println( "motherfucker took his right");}
             }
             case UP -> {if(this.y==1){this.y--;
