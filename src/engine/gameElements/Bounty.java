@@ -4,8 +4,10 @@ public class Bounty extends Entity{
     String type;
     int value;
 
-    Bounty(Train t, int abs, int ord){
-        super(t, abs, ord);
+    public Bounty(Train t, int abs, String type, int val){
+        super(type,t, abs, 1);
+        this.type=type;
+        this.value=val;
     }
 }
 
