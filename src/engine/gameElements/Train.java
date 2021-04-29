@@ -1,23 +1,32 @@
 package engine.gameElements;
 
+import java.util.ArrayList;
+
 public class Train {
 
     private final int NB_WAGONS=4;
-    public Bandit[][] board;
+    private ArrayList<Entity> entities;
 
     public Train(){
-        board =  new Bandit[2][NB_WAGONS];
+        entities= new ArrayList<>();
+    }
+    public void addEntity(Entity e){
+        entities.add(e);
+    }
+    public void removeEntity(Entity e){
+        entities.remove(e);
     }
 
-    public int get_NB_WAGONS() {
+    public ArrayList<Entity> getEntities(){
+        return this.entities;
+    }
+
+
+    public int getTrainLength(){
         return NB_WAGONS;
     }
 
-    public int getTrainLength(){
-        return board[0].length;
-    }
-
     public int getTrainHeight(){
-        return board.length;
+        return 2;
     }
 }
