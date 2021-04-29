@@ -1,6 +1,8 @@
 package graphics;
 
 import engine.gameElements.Train;
+import engine.gameElements.Entity;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +20,8 @@ public class Board extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
         this.setLayout(new GridLayout(train.getTrainHeight(),train.getTrainLength()));
 
-        for (int i = 0; i < train.board.length; i++){
-            for (int j = 0; j < train.board[i].length; j++){
+        for (int i = 0; i < train.getTrainHeight(); i++){
+            for (int j = 0; j < train.getTrainLength(); j++){
                 this.display[i][j] = new JLabel("Empty");
                 this.add(display[i][j]);
             }
@@ -27,14 +29,24 @@ public class Board extends JPanel {
     }
 
     public void update(){
-        for (int i = 0; i < train.board.length; i++) {
-            for (int j = 0; j < train.board[i].length; j++) {
-                if (train.board[i][j] == null){
-                    display[i][j].setText("Empty");
-                } else {
-                    display[i][j].setText(train.board[i][j].toString());
-                }
+        //Clear all
+        for (int i = 0; i < train.getTrainHeight(); i++) {
+            for (int j = 0; j < train.getTrainLength(); j++) {
+                display[i][j].setText("Empty");
+            }
+        }
+        //Show
+        for(Entity e: train.getEntities()){
+            String text= display[e.getY()][e.getX()].getText();
+            if(text!="Empty"){
+                display[e.getY()][e.getX()].setText(text+"\n"+e.getID());
+            }
+
+            else{
+                display[e.getY()][e.getX()].setText(e.getID());
             }
         }
     }
+
+
 }
