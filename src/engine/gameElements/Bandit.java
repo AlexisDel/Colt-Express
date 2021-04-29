@@ -12,7 +12,7 @@ public class Bandit extends Character {
     Action[] actions;
 
     public Bandit(String name, Train t, int abs, int ord) {
-        super(t, abs, ord);
+        super(name,t, abs, ord);
         this.NOM_BANDIT = name;
         this.bounties = new ArrayList<>();
         this.actions = new Action[2];
@@ -66,8 +66,9 @@ public class Bandit extends Character {
             }
         }
     }
-    //TODO
+    //TODO: throw exception if any actions are null
     public void update(Action[] actions){
+
         this.actions = actions;
         doActions();
     }
