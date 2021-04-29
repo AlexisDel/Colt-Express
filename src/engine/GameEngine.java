@@ -14,7 +14,7 @@ public class GameEngine {
     public boolean isGameFinished;
     public GameState gameState;
 
-    private Train train;
+    public Train train;
     private Bandit CrocoMechant;
 
     public GameEngine() {
@@ -22,11 +22,11 @@ public class GameEngine {
         this.isGameFinished = false;
         this.gameState = GameState.PLANNING;
 
-        this.gameController = new GameController(this);
-        this.gameDisplay = new GameDisplay(this);
-
         this.train = new Train();
         this.CrocoMechant = new Bandit("CrocoMechant", this.train, 0,0);
+
+        this.gameController = new GameController(this);
+        this.gameDisplay = new GameDisplay(this);
 
     }
 
@@ -36,5 +36,6 @@ public class GameEngine {
             gameController.resetActionsQueue();
             gameState = GameState.PLANNING;
         }
+        gameDisplay.update();
     }
 }

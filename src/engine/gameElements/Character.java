@@ -16,7 +16,7 @@ public class Character extends Entity{
             case LEFT -> {if(this.x>0){this.x--;
                 System.out.println( "motherfucker took his left");}
             }
-            case RIGHT -> {if(this.x<this.train.NB_WAGONS){this.x++;
+            case RIGHT -> {if(this.x<this.train.get_NB_WAGONS()){this.x++;
                 System.out.println( "motherfucker took his right");}
             }
             case UP -> {if(this.y==1){this.y--;
