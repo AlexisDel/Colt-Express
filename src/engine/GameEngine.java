@@ -7,6 +7,8 @@ import engine.gameElements.Marshall;
 import engine.gameElements.Train;
 import engine.utils.GameState;
 import graphics.GameDisplay;
+
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -19,7 +21,6 @@ public class GameEngine {
     public GameState gameState;
 
     public Train train;
-    private Bandit[] bandits;
 
     public GameEngine() {
 
@@ -28,21 +29,20 @@ public class GameEngine {
 
         this.train = new Train();
         //Adds players in the String list, setups the marshall and the bounty
-        String[] players= new String[]{"CrocoMechant","Fantiks"};
-        bandits= new Bandit[players.length];
+        //TODO: ask for input for the player names? No names also possible by only asking nbr of players
+        String[] players= new String[]{"CrocoMechant"};
         setupEntities(players);
 
         this.gameController = new GameController(this);
         this.gameDisplay = new GameDisplay(this);
 
     }
+
     public void setupEntities(String[] playerNames){
         //Setup players
         for(int i=0; i<playerNames.length;i++){
             Bandit player = new Bandit(playerNames[i] , this.train, 0,0);
             this.train.addEntity(player);
-            this.bandits[i]= player;
-
         }
         //Spawns the marshall
         Marshall marshall= new Marshall(this.train, this.train.getTrainLength()-1);
@@ -51,6 +51,7 @@ public class GameEngine {
         genBounty();
 
     }
+    //This function randomly generates the bounty inside the train
     public void genBounty(){
         //Locomotive bounty
         Bounty treasure= new Bounty(this.train, train.getTrainLength()-1, "Treasure",1000);
@@ -75,14 +76,29 @@ public class GameEngine {
         }
     }
 
-    public void update() {
-        if (this.gameState == GameState.ACTION){
-            //Croco bandit selected
-            //TODO: Enable more players (Changes needed elsewhere)
-            bandits[0].update(gameController.actions);
-            gameController.resetActionsQueue();
-            gameState = GameState.PLANNING;
+    public boolean actionsCompleted(List<Bandit>b){
+        for(Bandit bandit: b){
+            if(!bandit.getActionsCompleted()){return false;}
         }
-        gameDisplay.update();
+        return true;
     }
+
+    public void update() {
+        gameDisplay.update();
+
+        if (this.gameState == GameState.ACTION) {
+            this.train.getBandits().get(0).update();
+            if(actionsCompleted(this.train.getBandits())){
+                gameState = GameState.PLANNING;
+                this.gameController.resetActionsQueue();
+            }
+            else{
+                this.train.getMarshall().update();
+                gameDisplay.update();
+                }
+        }
+        else{this.train.getBandits().get(0).setActionTo(gameController.getActions());}
+
+    }
+
 }
