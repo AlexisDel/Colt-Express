@@ -14,16 +14,16 @@ public class Character extends Entity{
 
         switch (direction) {
             case LEFT -> {if(this.x>0){this.x--;
-                System.out.println( "motherfucker took his left");}
+                System.out.println( this.getID()+" took his left");}
             }
             case RIGHT -> {if(this.x<this.train.getTrainLength()-1){this.x++;
-                System.out.println( "motherfucker took his right");}
+                System.out.println( this.getID()+" took his right");}
             }
             case UP -> {if(this.y==1){this.y--;
-                System.out.println( "motherfucker on da ceiling");}
+                System.out.println( this.getID()+" went up");}
             }
             case DOWN -> {if(this.y==0){this.y++;
-                System.out.println( "motherfucker on da train");}
+                System.out.println( this.getID()+" went down");}
             }
 
         }
