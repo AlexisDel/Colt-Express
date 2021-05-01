@@ -4,25 +4,38 @@ import engine.utils.Action;
 import engine.GameEngine;
 import engine.utils.GameState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameController {
+    private int NB_ACTIONS=2;
 
     private GameEngine gameEngine;
 
-    public Action[] actions = new Action[2];
+    private List<Action> actions;
+
+    private boolean actionsReady;
 
     public GameController(GameEngine gameEngine){
         this.gameEngine = gameEngine;
+        this.actions = new ArrayList<>();
+        this.actionsReady=false;
+    }
+
+    public List<Action> getActions(){
+        return this.actions;
     }
 
     private void addActionToQueue(Action action){
-        this.actions[0] = this.actions[1];
-        this.actions[1] = action;
-
+        if(this.actions.size()<NB_ACTIONS){
+            actions.add(action);
+            if(this.actions.size()==NB_ACTIONS){this.actionsReady=true;}
+        }
     }
 
     public void resetActionsQueue(){
-        this.actions[0] = null;
-        this.actions[1] = null;
+        actions.clear();
+        this.actionsReady=false;
     }
 
     public void goUp(){
@@ -62,7 +75,10 @@ public class GameController {
     }
 
     public void action(){
-        gameEngine.gameState = GameState.ACTION;
+        //Only allows Action State if the actions are ready(there are 2 actions)
+        if(this.actionsReady){ gameEngine.gameState = GameState.ACTION;}
+        else{this.actions.clear();
+            System.out.println("Exactly "+ NB_ACTIONS+ " actions are allowed per player!");}
     }
 
 }
