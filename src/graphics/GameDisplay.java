@@ -17,10 +17,10 @@ public class GameDisplay extends JFrame {
 
         this.add(new Buttons(gameEngine.gameController), BorderLayout.SOUTH);
 
-        this.board = new Board(gameEngine.train);
+        this.board = new Board(gameEngine.getTrain());
         this.add(this.board, BorderLayout.CENTER);
 
-        this.boardG = new BoardG(gameEngine.train);
+        this.boardG = new BoardG(gameEngine.getTrain());
         this.add(this.boardG, BorderLayout.NORTH);
 
         this.setTitle("Colt Express");
