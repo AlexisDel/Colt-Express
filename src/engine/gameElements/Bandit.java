@@ -5,16 +5,16 @@ import engine.utils.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Bandit extends Character {
     final String NOM_BANDIT;
-    private Train train;
     private ArrayList<Bounty> bounties;
     private List <Action> actions;
     private boolean actionsCompleted;
 
-    public Bandit(String name, Train t, int abs, int ord) {
-        super(name,t, abs, ord);
+    public Bandit(String name,Train train, int abs, int ord) {
+        super(name,train, abs, ord);
         this.NOM_BANDIT = name;
         this.bounties = new ArrayList<>();
         this.actions= new ArrayList<>();
@@ -22,33 +22,61 @@ public class Bandit extends Character {
         this.actionsCompleted=true;
 
     }
+    public void addBounty(Bounty b){this.bounties.add(b);}
+    public void removeBounty(Bounty b){this.bounties.remove(b);}
 
     public boolean getActionsCompleted(){return this.actionsCompleted;}
     public List<Action> getActions(){return this.actions;}
+    public Train getTrain(){return this.train;}
 
-    //TODO
-    public void rob(){}
+    public void rob(){
+        //randomly pick one
+        Random r = new Random();
+        int randomBountyIndex = r.nextInt(this.train.getBountyAt(this.getX()).size());
+        //rob it
+        Bounty selectedBounty = this.train.getBountyAt(this.getX()).get(randomBountyIndex);
+        //pick it from the train and puts it in his pocket
+        this.addBounty(selectedBounty);
+        this.train.removeEntity(selectedBounty);
+        System.out.println(this.getID()+ " has just robbed !");
+    }
 
     public void shoot(Direction d){
         //TODO: Drop random bounty method, finish this method
         switch (d) {
             case LEFT -> {
-                System.out.println( this.getID()+" shoot left");
+                System.out.println( this.getID()+" shot left");
             }
             case RIGHT -> {
-                System.out.println( this.getID()+" shoot right");
+                System.out.println( this.getID()+" shot right");
             }
             case UP -> {
-                System.out.println( this.getID()+" shoot da ceiling");
+                System.out.println( this.getID()+" shot up");
             }
             case DOWN -> {
-                System.out.println( this.getID()+" shot da train");
+                System.out.println( this.getID()+" shot down");
             }
 
         }
     }
-    //TODO
-    public void getMoney(){}
+    public void dropBounty(){
+        if(this.bounties.size()>0) {
+            Random r = new Random();
+            int randomBountyIndex = r.nextInt(this.bounties.size());
+            Bounty selectedBounty = this.bounties.get(randomBountyIndex);
+            this.bounties.remove(selectedBounty);
+            selectedBounty.moveTo(this.x, this.y);
+            this.train.addEntity(selectedBounty);
+        }
+    }
+
+    public int getMoney(){
+        int sum=0;
+        for(Bounty b: this.bounties){
+            sum+=b.value;
+        }
+        return sum;
+    }
 
     public void doAction(Action a){
 
@@ -76,7 +104,7 @@ public class Bandit extends Character {
         }
     }
 
-    public void setActionTo(List<Action>a){
+    public void setActionsTo(List<Action>a){
         this.actions=a;
         this.actionsCompleted = false;
     }
