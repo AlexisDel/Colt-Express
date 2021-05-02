@@ -11,7 +11,7 @@ public class Marshall extends Character {
         super("Marshall",t, abs, 1);
         this.NERVOSITE_MARSHALL= (float) 0.3;
     }
-    //TODO
+
     public void autoMove(){
         Random r= new Random();
         int probability= r.nextInt(100);
@@ -21,16 +21,17 @@ public class Marshall extends Character {
            else{this.move(Direction.RIGHT);}
         }
     }
-    //TODO
+
     public void catchBandit(){
         for(Bandit b: this.train.getBandits()){
             if(this.x==b.getX()&& b.getY()==1){
-                //TODO: drops 1 random bounty
+                b.dropBounty();
                 b.move(Direction.UP);
                 System.out.println("The Marshall caught "+b.getID());
             }
         }
     }
+    public void setNERVOSITE_MARSHALL(float p){this.NERVOSITE_MARSHALL=p;}
 
     public void update(){
         catchBandit();
