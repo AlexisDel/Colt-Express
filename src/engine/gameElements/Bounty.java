@@ -9,5 +9,10 @@ public class Bounty extends Entity{
         this.type=type;
         this.value=val;
     }
+
+    public void moveTo(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
 }
 
