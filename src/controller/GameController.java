@@ -2,7 +2,7 @@ package controller;
 
 import engine.utils.Action;
 import engine.GameEngine;
-import engine.utils.GameState;
+import engine.GameState;
 
 import java.util.ArrayList;
 import java.util.List;

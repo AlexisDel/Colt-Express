@@ -5,7 +5,6 @@ import engine.gameElements.Bandit;
 import engine.gameElements.Bounty;
 import engine.gameElements.Marshall;
 import engine.gameElements.Train;
-import engine.utils.GameState;
 import graphics.GameDisplay;
 
 import java.util.List;

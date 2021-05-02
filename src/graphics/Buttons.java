@@ -86,6 +86,7 @@ public class Buttons extends JPanel {
 
         // Setup controller.GameController display
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
+        this.setPreferredSize(new Dimension(1000, 60));
         this.setLayout(new GridLayout(1,10));
 
         // Ads buttons
