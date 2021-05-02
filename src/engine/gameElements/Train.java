@@ -2,6 +2,7 @@ package engine.gameElements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Train {
 
@@ -37,6 +38,15 @@ public class Train {
         for (Entity e: this.getEntities()) {
             if (e instanceof Marshall) {
                 res= (Marshall) e;
+            }
+        }
+        return res;
+    }
+    public List<Bounty> getBountyAt(int i){
+        List<Bounty>res= new ArrayList<>();
+        for (Entity e: this.getEntities()){
+            if (e instanceof Bounty && e.getX()==i){
+                res.add((Bounty) e);
             }
         }
         return res;
