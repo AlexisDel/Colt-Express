@@ -5,11 +5,11 @@ import engine.gameElements.Bandit;
 import engine.gameElements.Bounty;
 import engine.gameElements.Marshall;
 import engine.gameElements.Train;
-import engine.GameState;
+import engine.utils.Action;
+import engine.utils.Direction;
 import graphics.GameDisplay;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -45,10 +45,11 @@ public class GameEngine {
         //Spawns the bounty
         genBounty();
         //Setup players
-        for(String name: playerNames){
-            Bandit player = new Bandit(name,this.train, 0,0);
+        for(int i=0; i<playerNames.length;i++){
+            Bandit player = new Bandit(playerNames[i],this.train, i%this.train.getTrainLength(),0);
             this.train.addEntity(player);
         }
+
         //Spawns the marshall
         Marshall marshall= new Marshall(this.train, this.train.getTrainLength()-1);
         this.train.addEntity(marshall);
@@ -81,40 +82,43 @@ public class GameEngine {
     }
     
 
-    public boolean actionsCompleted(List<Bandit>b){
+    public boolean allActionsExecuted(List<Bandit>b){
         for(Bandit bandit: b){
-            if(!bandit.getActionsCompleted()){return false;}
+            if(bandit.getActions().size()!=0){return false;}
         }
         return true;
     }
+
+    public void setupPlayersActions(List<Action>actionList){
+        if(actionList.size()!=0) {
+
+            int NB_ACTIONS = actionList.size();
+            int NB_PLAYERS = this.train.getBandits().size();
+            for (int i = 0; i < NB_PLAYERS; i++) {
+                this.train.getBandits().get(i).addAction(actionList.get(i * NB_PLAYERS + 0));
+                this.train.getBandits().get(i).addAction(actionList.get(i * NB_PLAYERS + 1));
+            }
+        }
+    }
+
 
     public void update() {
         gameDisplay.update();
 
         if (this.gameState == GameState.ACTION) {
-            //2PLAYERS for(Bandit b: this.train.getBandits()){b.update();}
-            this.train.getBandits().get(0).update();
+            for(Bandit b: this.train.getBandits()){b.update();}
 
-            if(actionsCompleted(this.train.getBandits())){
+            if(allActionsExecuted(this.train.getBandits())){
                 gameState = GameState.PLANNING;
-                this.gameController.resetActionsQueue();
+                this.gameController.resetActions();
             }
             else{
-                this.train.getMarshall().setNERVOSITE_MARSHALL((float) 0.3);
                 this.train.getMarshall().update();
                 gameDisplay.update();
                 }
         }
         else{
-            //2PLAYERS for(Bandit b: this.train.getBandits()){b.setActionsTo(gameController.getActions());}
-            this.train.getBandits().get(0).setActionsTo(gameController.getActions());
-
-            //allows for the marshall to move a bit slower while players are planning
-            this.train.getMarshall().setNERVOSITE_MARSHALL((float) 0.2);
-            this.train.getMarshall().update();
-            gameDisplay.update();
+            setupPlayersActions(gameController.getActions());
         }
-
     }
-
 }

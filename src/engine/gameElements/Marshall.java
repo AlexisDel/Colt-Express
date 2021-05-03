@@ -31,7 +31,6 @@ public class Marshall extends Character {
             }
         }
     }
-    public void setNERVOSITE_MARSHALL(float p){this.NERVOSITE_MARSHALL=p;}
 
     public void update(){
         catchBandit();

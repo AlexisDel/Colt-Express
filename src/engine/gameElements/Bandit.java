@@ -11,23 +11,18 @@ public class Bandit extends Character {
     final String NOM_BANDIT;
     private ArrayList<Bounty> bounties;
     private List <Action> actions;
-    private boolean actionsCompleted;
 
     public Bandit(String name,Train train, int abs, int ord) {
         super(name,train, abs, ord);
         this.NOM_BANDIT = name;
         this.bounties = new ArrayList<>();
         this.actions= new ArrayList<>();
-        //actions list init as empty so all actions completed
-        this.actionsCompleted=true;
 
     }
     public void addBounty(Bounty b){this.bounties.add(b);}
-    public void removeBounty(Bounty b){this.bounties.remove(b);}
 
-    public boolean getActionsCompleted(){return this.actionsCompleted;}
     public List<Action> getActions(){return this.actions;}
-    public Train getTrain(){return this.train;}
+    public void addAction(Action a){if(this.actions.size()<2)this.actions.add(a);}
 
     public void rob(){
         //randomly pick one
@@ -106,7 +101,6 @@ public class Bandit extends Character {
 
     public void setActionsTo(List<Action>a){
         this.actions=a;
-        this.actionsCompleted = false;
     }
 
 
@@ -122,7 +116,6 @@ public class Bandit extends Character {
             this.actions.remove(0);
         }
         //if the list is empty, all actions should have been executed
-        else{ this.actionsCompleted=true;}
     }
 
 }
