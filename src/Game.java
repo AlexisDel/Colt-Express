@@ -19,6 +19,6 @@ public class Game {
                     gameEngine.update();
                 }
             }
-        }, 0, 1000);
+        }, 0, 100);
     }
 }

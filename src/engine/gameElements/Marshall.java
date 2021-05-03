@@ -13,10 +13,10 @@ public class Marshall extends Character {
     }
 
     public void autoMove(){
-        Random r= new Random();
-        int probability= r.nextInt(100);
-        boolean randomDirection= r.nextBoolean();
-        if(probability<=NERVOSITE_MARSHALL*100) {
+        Random r = new Random();
+        int probability = r.nextInt(1000);
+        boolean randomDirection = r.nextBoolean();
+        if(probability <= NERVOSITE_MARSHALL*100) {
            if(randomDirection){this.move(Direction.LEFT);}
            else{this.move(Direction.RIGHT);}
         }
