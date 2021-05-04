@@ -8,7 +8,6 @@ import java.awt.*;
 public class GameDisplay extends JFrame {
 
     GameEngine gameEngine;
-    Board board;
     BoardG boardG;
 
     public GameDisplay(GameEngine gameEngine){
@@ -17,10 +16,7 @@ public class GameDisplay extends JFrame {
 
         this.add(new Buttons(gameEngine.gameController), BorderLayout.SOUTH);
 
-        this.board = new Board(gameEngine.getTrain());
-        this.add(this.board, BorderLayout.CENTER);
-
-        this.boardG = new BoardG(gameEngine.getTrain());
+        this.boardG = new BoardG(gameEngine.getTrain(), gameEngine);
         this.add(this.boardG, BorderLayout.NORTH);
 
         this.setTitle("Colt Express");
@@ -32,6 +28,5 @@ public class GameDisplay extends JFrame {
 
     public void update(){
         this.boardG.update();
-        this.board.update();
     }
 }

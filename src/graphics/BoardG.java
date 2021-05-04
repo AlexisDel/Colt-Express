@@ -1,5 +1,6 @@
 package graphics;
 
+import engine.GameEngine;
 import engine.gameElements.*;
 import graphics.utils.Positions;
 
@@ -11,7 +12,10 @@ import java.io.IOException;
 
 public class BoardG extends JPanel {
 
-    final int PANEL_WIDTH =  1000;
+    private Train train;
+    private GameEngine gameEngine;
+
+    final int PANEL_WIDTH = 1000;
     final int PANEL_HEIGHT = 500;
 
     int railwaysX = 0;
@@ -19,8 +23,6 @@ public class BoardG extends JPanel {
 
     int backgroundX = 0;
     int backgroundVelocity = 5;
-
-    Train train;
 
     private Image background;
     private Image railways;
@@ -31,36 +33,48 @@ public class BoardG extends JPanel {
     private Image marshalImage;
     private Image treasureImage;
     private Image jewelImage;
-    private Image bountyImage;
+    private Image bagImage;
 
-    public BoardG(Train train) {
+    private JLabel gameStateLabel;
+    private Font font;
+
+    public BoardG(Train train, GameEngine gameEngine) {
 
         this.train = train;
+        this.gameEngine = gameEngine;
 
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.red);
 
         // Load images
         try {
-            background = ImageIO.read(new File("ressources","background.png"));
-            railways = ImageIO.read(new File("ressources","railways.png"));
-            trainImage = ImageIO.read(new File("ressources","train.png"));
-            bandit1Image = ImageIO.read(new File("ressources","characters.png")).getSubimage(49,0,39,47);
-            bandit2Image = ImageIO.read(new File("ressources","characters.png")).getSubimage(188,0,39,47);
-            marshalImage = ImageIO.read(new File("ressources","characters.png")).getSubimage(326,0,39,47);
-            treasureImage = ImageIO.read(new File("ressources","bounty.png")).getSubimage(0,0,39,47);
-            jewelImage = ImageIO.read(new File("ressources","bounty.png")).getSubimage(39,0,39,47);
-            bountyImage = ImageIO.read(new File("ressources","bounty.png")).getSubimage(78,0,39,47);
+            background = ImageIO.read(new File("ressources", "background.png"));
+            railways = ImageIO.read(new File("ressources", "railways.png"));
+            trainImage = ImageIO.read(new File("ressources", "train.png"));
+            bandit1Image = ImageIO.read(new File("ressources", "characters.png")).getSubimage(49, 0, 39, 47);
+            bandit2Image = ImageIO.read(new File("ressources", "characters.png")).getSubimage(188, 0, 39, 47);
+            marshalImage = ImageIO.read(new File("ressources", "characters.png")).getSubimage(326, 0, 39, 47);
+            treasureImage = ImageIO.read(new File("ressources", "bounty.png")).getSubimage(0, 0, 39, 47);
+            jewelImage = ImageIO.read(new File("ressources", "bounty.png")).getSubimage(39, 0, 39, 47);
+            bagImage = ImageIO.read(new File("ressources", "bounty.png")).getSubimage(78, 0, 39, 47);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Load font
+        try {
+            this.font = Font.createFont(Font.TRUETYPE_FONT, new File("ressources", "The Bandido.otf"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private void drawBackground(Graphics2D g2D){
+    private void drawBackground(Graphics2D g2D) {
 
         railwaysX -= railwaysVelocity;
 
-        if (railwaysX < -1000){
+        if (railwaysX < -1000) {
             railwaysX = 0;
         }
 
@@ -76,38 +90,53 @@ public class BoardG extends JPanel {
 
     }
 
+    private void drawEntities(Graphics2D g2D){
+
+        //TODO : use ID instead of instances (to get treasure and other bounty types)
+        for (Entity e : train.getEntities()) {
+
+            Image image = switch (e.getType()){
+                case "Bandit1" -> bandit1Image;
+                case "Bandit2" -> bandit2Image;
+                case "Marshall" -> marshalImage;
+                case "Treasure" -> treasureImage;
+                case "Jewel" -> jewelImage;
+                case "Bag" -> bagImage;
+                default -> null;
+            };
+
+            g2D.drawImage(image, Positions.positions[e.getY()][e.getX()][0], Positions.positions[e.getY()][e.getX()][1], null);
+        }
+
+    }
+
+    private void drawText(Graphics2D g2D){
+        g2D.setFont(this.font.deriveFont(Font.BOLD, 40));
+        g2D.setPaint(Color.gray);
+        g2D.drawString(gameEngine.gameState.toString(), 425, 50);
+
+        g2D.setFont(new Font("Arial", Font.BOLD, 25));
+        g2D.setPaint(Color.lightGray);
+        g2D.drawString( ("Player 1 = " + train.getBandits().get(0).getMoney() + "$"), 800, 50);
+        g2D.drawString( ("Player 2 = " + train.getBandits().get(1).getMoney() + "$"), 800, 100);
+
+
+
+
+    }
+
     public void paint(Graphics g) {
 
         Graphics2D g2D = (Graphics2D) g;
 
         drawBackground(g2D);
+        drawEntities(g2D);
+        drawText(g2D);
 
-        //TODO : use ID instead of instances (to get treasure and other bounty types)
-        Image image = null;
-        for (Entity e : train.getEntities()) {
 
-            if (e instanceof Bandit) {
-                if(e.getID()=="CrocoMechant")
-                image = bandit1Image;
-                else{image=bandit2Image;}
-            } else if (e instanceof Marshall) {
-                image = marshalImage;
-            } else if (e instanceof Bounty){
-                if(e.getID() == "Treasure"){
-                    image = treasureImage;
-                }
-                else if (e.getID() == "Jewel"){
-                    image = jewelImage;
-                }
-                else {
-                    image = bountyImage;
-                }
-            }
-            g2D.drawImage(image, Positions.positions[e.getY()][e.getX()][0], Positions.positions[e.getY()][e.getX()][1], null);
-        }
     }
 
-    public void update(){
+    public void update() {
         this.repaint();
     }
 }

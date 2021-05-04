@@ -46,7 +46,7 @@ public class GameEngine {
         genBounty();
         //Setup players
         for(int i=0; i<playerNames.length;i++){
-            Bandit player = new Bandit(playerNames[i],this.train, i%this.train.getTrainLength(),0);
+            Bandit player = new Bandit(("Bandit"+i), playerNames[i], this.train, i%this.train.getTrainLength(), 0);
             this.train.addEntity(player);
         }
 
@@ -59,7 +59,7 @@ public class GameEngine {
     //This function randomly generates the bounty inside the train
     public void genBounty(){
         //Locomotive bounty
-        Bounty treasure= new Bounty(this.train, train.getTrainLength()-1, "Treasure",1000);
+        Bounty treasure= new Bounty("Treasure", this.train, train.getTrainLength()-1, 1000);
         this.train.addEntity(treasure);
         //Other bounty
         int randomNum1=0;
@@ -71,11 +71,11 @@ public class GameEngine {
              //Random num of jewelry and bags
             for(int k=0; k< randomNum1;k++){
                 randValue=ThreadLocalRandom.current().nextInt(0, 500 + 1);
-                Bounty bag= new Bounty(this.train, x, "Bag",randValue);
+                Bounty bag= new Bounty("Bag", this.train, x ,randValue);
                 this.train.addEntity(bag);
             } randomNum2=ThreadLocalRandom.current().nextInt(1, 4 + 1);
             for(int k=0; k< randomNum2-randomNum1;k++){
-                Bounty jewelry= new Bounty(this.train, x, "Jewel",500);
+                Bounty jewelry= new Bounty("Jewel", this.train, x, 500);
                 this.train.addEntity(jewelry);
             }
         }

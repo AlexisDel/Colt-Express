@@ -39,11 +39,11 @@ public class Board extends JPanel {
         for(Entity e: train.getEntities()){
             String text= display[e.getY()][e.getX()].getText();
             if(text!="Empty"){
-                display[e.getY()][e.getX()].setText(text+"\n"+e.getID());
+                //display[e.getY()][e.getX()].setText(text+"\n"+e.getType());
             }
 
             else{
-                display[e.getY()][e.getX()].setText(e.getID());
+                //display[e.getY()][e.getX()].setText(e.getType());
             }
         }
     }
