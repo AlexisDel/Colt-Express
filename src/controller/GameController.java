@@ -41,7 +41,6 @@ public class GameController {
 
     public List<Action> getActions(){
         if(this.actionsReady){
-            System.out.println("giving actions");
             return this.actions;
             }
         else{return new ArrayList<>();}
@@ -85,7 +84,8 @@ public class GameController {
 
     public void action(){
         //Only allows Action State if the actions are ready(there are 2 actions)
-        if(this.actionsReady){ gameEngine.gameState = GameState.ACTION;}
+        if(this.actionsReady){ gameEngine.gameState = GameState.ACTION;
+        gameEngine.setActionButtonPushed(true);}
         else{;
             System.out.println("Exactly "+ NB_ACTIONS+ " actions are allowed per player!");}
     }

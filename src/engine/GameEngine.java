@@ -22,9 +22,10 @@ public class GameEngine {
     public GameState gameState;
 
     private Train train;
+    private boolean actionButtonPushed;
 
     public GameEngine() {
-
+        this.actionButtonPushed=false;
         this.isGameFinished = false;
         this.gameState = GameState.PLANNING;
 
@@ -40,6 +41,7 @@ public class GameEngine {
     }
 
     public Train getTrain(){return this.train;}
+    public boolean setActionButtonPushed(boolean b){return this.actionButtonPushed=b;}
 
     public void setupEntities(String[] playerNames){
         //Spawns the bounty
@@ -103,14 +105,17 @@ public class GameEngine {
     public void update(){
         gameDisplay.update();
         if (this.gameState == GameState.ACTION) {
-            for (Bandit b : this.train.getBandits()) {
-                b.update();
-                this.train.getMarshall().update();
-                gameDisplay.update();
-            }
-            if (allActionsExecuted(this.train.getBandits())) {
+            if (actionButtonPushed){
+                for (Bandit b : this.train.getBandits()) {
+                    b.update();
+                    this.train.getMarshall().update();
+                    gameDisplay.update();
+                }
+                if (allActionsExecuted(this.train.getBandits())) {
                 gameState = GameState.PLANNING;
                 this.gameController.resetActions();
+                }
+                actionButtonPushed=false;
             }
         }
         else{
