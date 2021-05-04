@@ -32,14 +32,16 @@ public class Bandit extends Character {
 
     public void rob() {
         //randomly pick one
-        Random r = new Random();
-        int randomBountyIndex = r.nextInt(this.train.getBountyAt(this.getX()).size());
-        //rob it
-        Bounty selectedBounty = this.train.getBountyAt(this.getX()).get(randomBountyIndex);
-        //pick it from the train and puts it in his pocket
-        this.addBounty(selectedBounty);
-        this.train.removeEntity(selectedBounty);
-        System.out.println(this.getName() + " has just robbed !");
+        if(this.train.getBountyAt(this.getX(),this.getY()).size()>0) {
+            Random r = new Random();
+            int randomBountyIndex = r.nextInt(this.train.getBountyAt(this.getX(),this.getY()).size());
+            //rob it
+            Bounty selectedBounty = this.train.getBountyAt(this.getX(),this.getY()).get(randomBountyIndex);
+            //pick it from the train and puts it in his pocket
+            this.addBounty(selectedBounty);
+            this.train.removeEntity(selectedBounty);
+            System.out.println(this.getName() + " has just robbed !");
+        }
     }
 
     public void shoot(Direction d) {

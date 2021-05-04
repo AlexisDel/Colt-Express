@@ -42,10 +42,10 @@ public class Train {
         }
         return res;
     }
-    public List<Bounty> getBountyAt(int i){
+    public List<Bounty> getBountyAt(int x, int y){
         List<Bounty>res= new ArrayList<>();
         for (Entity e: this.getEntities()){
-            if (e instanceof Bounty && e.getX()==i){
+            if (e instanceof Bounty && e.getX()==x && e.getY()==y){
                 res.add((Bounty) e);
             }
         }
