@@ -96,8 +96,8 @@ public class BoardG extends JPanel {
         for (Entity e : train.getEntities()) {
 
             Image image = switch (e.getType()){
-                case "Bandit1" -> bandit1Image;
-                case "Bandit2" -> bandit2Image;
+                case "Bandit0" -> bandit1Image;
+                case "Bandit1" -> bandit2Image;
                 case "Marshall" -> marshalImage;
                 case "Treasure" -> treasureImage;
                 case "Jewel" -> jewelImage;
