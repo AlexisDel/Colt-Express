@@ -92,7 +92,6 @@ public class GameEngine {
     public void setupPlayersActions(List<Action>actionList){
         if(actionList.size()!=0) {
 
-            int NB_ACTIONS = actionList.size();
             int NB_PLAYERS = this.train.getBandits().size();
             for (int i = 0; i < NB_PLAYERS; i++) {
                 this.train.getBandits().get(i).addAction(actionList.get(i * NB_PLAYERS + 0));
@@ -101,21 +100,18 @@ public class GameEngine {
         }
     }
 
-
-    public void update() {
+    public void update(){
         gameDisplay.update();
-
         if (this.gameState == GameState.ACTION) {
-            for(Bandit b: this.train.getBandits()){b.update();}
-
-            if(allActionsExecuted(this.train.getBandits())){
+            for (Bandit b : this.train.getBandits()) {
+                b.update();
+                this.train.getMarshall().update();
+                gameDisplay.update();
+            }
+            if (allActionsExecuted(this.train.getBandits())) {
                 gameState = GameState.PLANNING;
                 this.gameController.resetActions();
             }
-            else{
-                this.train.getMarshall().update();
-                gameDisplay.update();
-                }
         }
         else{
             setupPlayersActions(gameController.getActions());

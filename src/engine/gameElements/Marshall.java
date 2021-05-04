@@ -9,12 +9,12 @@ public class Marshall extends Character {
 
     public Marshall(Train t, int abs){
         super("Marshall",t, abs, 1);
-        this.NERVOSITE_MARSHALL= (float) 0.3;
+        this.NERVOSITE_MARSHALL= (float) 0.4;
     }
 
     public void autoMove(){
         Random r = new Random();
-        int probability = r.nextInt(1000);
+        int probability = r.nextInt(100);
         boolean randomDirection = r.nextBoolean();
         if(probability <= NERVOSITE_MARSHALL*100) {
            if(randomDirection){this.move(Direction.LEFT);}
@@ -25,9 +25,9 @@ public class Marshall extends Character {
     public void catchBandit(){
         for(Bandit b: this.train.getBandits()){
             if(this.x==b.getX()&& b.getY()==1){
+                System.out.println("The Marshall caught "+b.getID());
                 b.dropBounty();
                 b.move(Direction.UP);
-                System.out.println("The Marshall caught "+b.getID());
             }
         }
     }

@@ -26,7 +26,8 @@ public class BoardG extends JPanel {
     private Image railways;
 
     private Image trainImage;
-    private Image banditImage;
+    private Image bandit1Image;
+    private Image bandit2Image;
     private Image marshalImage;
     private Image treasureImage;
     private Image jewelImage;
@@ -44,7 +45,8 @@ public class BoardG extends JPanel {
             background = ImageIO.read(new File("ressources","background.png"));
             railways = ImageIO.read(new File("ressources","railways.png"));
             trainImage = ImageIO.read(new File("ressources","train.png"));
-            banditImage = ImageIO.read(new File("ressources","characters.png")).getSubimage(49,0,39,47);
+            bandit1Image = ImageIO.read(new File("ressources","characters.png")).getSubimage(49,0,39,47);
+            bandit2Image = ImageIO.read(new File("ressources","characters.png")).getSubimage(188,0,39,47);
             marshalImage = ImageIO.read(new File("ressources","characters.png")).getSubimage(326,0,39,47);
             treasureImage = ImageIO.read(new File("ressources","bounty.png")).getSubimage(0,0,39,47);
             jewelImage = ImageIO.read(new File("ressources","bounty.png")).getSubimage(39,0,39,47);
@@ -85,7 +87,9 @@ public class BoardG extends JPanel {
         for (Entity e : train.getEntities()) {
 
             if (e instanceof Bandit) {
-                image = banditImage;
+                if(e.getID()=="CrocoMechant")
+                image = bandit1Image;
+                else{image=bandit2Image;}
             } else if (e instanceof Marshall) {
                 image = marshalImage;
             } else if (e instanceof Bounty){

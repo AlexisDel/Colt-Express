@@ -37,23 +37,58 @@ public class Bandit extends Character {
     }
 
     public void shoot(Direction d){
-        //TODO: Drop random bounty method, finish this method
         switch (d) {
             case LEFT -> {
+                //axis= x (true)
+                shootTargets(this.x, 0,true);
+
                 System.out.println( this.getID()+" shot left");
             }
             case RIGHT -> {
+                //axis= x (true)
+                shootTargets(this.x, this.train.getTrainLength()-1,true);
+
                 System.out.println( this.getID()+" shot right");
             }
             case UP -> {
+                //axis= y (false)
+                shootTargets(this.y, 0,false);
+
                 System.out.println( this.getID()+" shot up");
             }
             case DOWN -> {
+                //axis= y (false)
+                shootTargets(this.y, 1,false);
+
                 System.out.println( this.getID()+" shot down");
             }
-
         }
     }
+
+    public void shootTargets(int from, int to, boolean axis){
+        String targets="";
+        for(int position=from;position<=to;position++){
+
+            for(Bandit b:this.train.getBandits()){
+                //disable shoot yourself
+                if(!b.equals(this)){
+                    //shoot left or right
+                    if(axis){
+                        if(b.getX()==position && b.getY()==this.y){
+                            targets=targets+b.getID();
+                            b.dropBounty();}}
+                    //shoot up or down
+                    else{
+                        if(b.getX()==this.x && b.getY()==position){
+                            targets=targets+" "+b.getID();
+                            b.dropBounty(); }}
+
+                }
+            }
+        }
+        System.out.println(this.getID()+" shot "+ targets);
+    }
+
     public void dropBounty(){
         if(this.bounties.size()>0) {
             Random r = new Random();
