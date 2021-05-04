@@ -31,6 +31,7 @@ public class Marshall extends Character {
                 System.out.println("The Marshall caught " + b.getName());
                 b.dropBounty();
                 b.move(Direction.UP);
+                b.clearActions();
             }
         }
     }

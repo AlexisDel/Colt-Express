@@ -30,6 +30,8 @@ public class Bandit extends Character {
         if (this.actions.size() < 2) this.actions.add(a);
     }
 
+    public void clearActions(){this.actions.clear();}
+
     public void rob() {
         //randomly pick one
         if(this.train.getBountyAt(this.getX(),this.getY()).size()>0) {
