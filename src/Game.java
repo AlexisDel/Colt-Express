@@ -26,7 +26,7 @@ public class Game {
             @Override
             public void run() {
                 if (!gameEngine.isGameFinished){
-                    gameEngine.getTrain().getMarshall().autoMove();
+                    gameEngine.getTrain().getMarshall().update();
                 }
             }
         }, 0, 1000);
