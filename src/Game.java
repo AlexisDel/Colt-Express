@@ -20,5 +20,15 @@ public class Game {
                 }
             }
         }, 0, 100);
+
+        Timer t2 = new Timer();
+        t2.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!gameEngine.isGameFinished){
+                    gameEngine.getTrain().getMarshall().autoMove();
+                }
+            }
+        }, 0, 1000);
     }
 }

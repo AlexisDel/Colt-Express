@@ -34,10 +34,4 @@ public class Marshall extends Character {
             }
         }
     }
-
-    public void update() {
-        catchBandit();
-        autoMove();
-        catchBandit();
-    }
 }
