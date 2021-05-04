@@ -30,6 +30,9 @@ public class GameController {
     private void addAction(Action action){
         if(this.actions.size()<NB_ACTIONS){
             this.actions.add(action);}
+        else{
+            System.out.println("No more than"+NB_ACTIONS+"actions");
+        }
 
         if(this.actions.size()==this.NB_ACTIONS){this.actionsReady=true;}
     }
