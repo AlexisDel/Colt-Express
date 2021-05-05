@@ -34,6 +34,8 @@ public class BoardG extends JPanel {
     private Image treasureImage;
     private Image jewelImage;
     private Image bagImage;
+    private Image coinImage;
+    private Image gunImage;
 
     private JLabel gameStateLabel;
     private Font font;
@@ -57,6 +59,8 @@ public class BoardG extends JPanel {
             treasureImage = ImageIO.read(new File("ressources", "bounty.png")).getSubimage(0, 0, 39, 47);
             jewelImage = ImageIO.read(new File("ressources", "bounty.png")).getSubimage(39, 0, 39, 47);
             bagImage = ImageIO.read(new File("ressources", "bounty.png")).getSubimage(78, 0, 39, 47);
+            coinImage = ImageIO.read(new File("ressources", "coin.png"));
+            gunImage = ImageIO.read(new File("ressources", "gun.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,12 +94,12 @@ public class BoardG extends JPanel {
 
     }
 
-    private void drawEntities(Graphics2D g2D){
+    private void drawEntities(Graphics2D g2D) {
 
         //TODO : use ID instead of instances (to get treasure and other bounty types)
         for (Entity e : train.getEntities()) {
 
-            Image image = switch (e.getType()){
+            Image image = switch (e.getType()) {
                 case "Bandit0" -> bandit1Image;
                 case "Bandit1" -> bandit2Image;
                 case "Marshall" -> marshalImage;
@@ -110,15 +114,36 @@ public class BoardG extends JPanel {
 
     }
 
-    private void drawText(Graphics2D g2D){
+    private void drawHUD(Graphics2D g2D) {
         g2D.setFont(this.font.deriveFont(Font.BOLD, 40));
         g2D.setPaint(Color.gray);
+
         g2D.drawString(gameEngine.gameState.toString(), 425, 50);
+        if (gameEngine.gameController.getPlayerTurnAsString() != null) {
+            g2D.drawString(gameEngine.gameController.getPlayerTurnAsString(), 425, 100);
+            g2D.drawString(gameEngine.gameController.getClickLeftPerPlayerAsString(), 425, 150);
+        } else {
+            g2D.drawString(gameEngine.gameController.getClickLeftPerPlayerAsString(), 425, 100);
+        }
 
         g2D.setFont(new Font("Arial", Font.BOLD, 25));
         g2D.setPaint(Color.lightGray);
-        g2D.drawString( ("Player 1 = " + train.getBandits().get(0).getMoney() + "$"), 800, 50);
-        g2D.drawString( ("Player 2 = " + train.getBandits().get(1).getMoney() + "$"), 800, 100);
+
+        // TODO : replace 5 by bandit.getBullets()
+
+        g2D.drawString(("Player 1"), 50, 50);
+        g2D.drawString(String.valueOf(train.getBandits().get(0).getMoney()), 75, 80);
+        g2D.drawImage(coinImage, 50, 63, null);
+        for (int i = 0; i<5; i++){
+            g2D.drawImage(gunImage, (50 + i*20), 86, null);
+        }
+
+        g2D.drawString(("Player 2"), 850, 50);
+        g2D.drawString(String.valueOf(train.getBandits().get(1).getMoney()), 875, 80);
+        g2D.drawImage(coinImage, 850, 63, null);
+        for (int i = 0; i<5; i++){
+            g2D.drawImage(gunImage, (850 + i*20), 86, null);
+        }
 
 
 
@@ -131,7 +156,7 @@ public class BoardG extends JPanel {
 
         drawBackground(g2D);
         drawEntities(g2D);
-        drawText(g2D);
+        drawHUD(g2D);
 
 
     }
