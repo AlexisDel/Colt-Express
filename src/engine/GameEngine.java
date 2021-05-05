@@ -111,6 +111,17 @@ public class GameEngine {
         }
     }
 
+    private void handleButtons() {
+        if (gameController.getActions().size() < 4) {
+            gameDisplay.buttons.enableActionsButtons();
+            gameDisplay.buttons.disableActionButton();
+        }
+        else {
+            gameDisplay.buttons.disableActionsButtons();
+            gameDisplay.buttons.enableActionButton();
+        }
+    }
+
     public void update() {
         if (this.gameState == GameState.ACTION) {
             if (actionButtonPushed) {
@@ -127,6 +138,7 @@ public class GameEngine {
         } else {
             setupPlayersActions(gameController.getActions());
         }
+        handleButtons();
         gameDisplay.update();
     }
 }

@@ -8,13 +8,15 @@ import java.awt.*;
 public class GameDisplay extends JFrame {
 
     GameEngine gameEngine;
+    public Buttons buttons;
     BoardG boardG;
 
     public GameDisplay(GameEngine gameEngine){
 
         this.gameEngine = gameEngine;
 
-        this.add(new Buttons(gameEngine.gameController), BorderLayout.SOUTH);
+        this.buttons = new Buttons(gameEngine.gameController);
+        this.add(this.buttons, BorderLayout.SOUTH);
 
         this.boardG = new BoardG(gameEngine.getTrain(), gameEngine);
         this.add(this.boardG, BorderLayout.NORTH);

@@ -89,6 +89,7 @@ public class Buttons extends JPanel {
         this.setPreferredSize(new Dimension(1000, 60));
         this.setLayout(new GridLayout(1,10));
 
+
         // Ads buttons
         this.add(up);
         this.add(down);
@@ -96,9 +97,41 @@ public class Buttons extends JPanel {
         this.add(right);
         this.add(shootUp);
         this.add(shootDown);
-        this.add(shootRight);
         this.add(shootLeft);
+        this.add(shootRight);
         this.add(rob);
         this.add(action);
+    }
+
+    public void enableActionsButtons(){
+        up.setEnabled(true);
+        down.setEnabled(true);
+        left.setEnabled(true);
+        right.setEnabled(true);
+        shootUp.setEnabled(true);
+        shootDown.setEnabled(true);
+        shootLeft.setEnabled(true);
+        shootRight.setEnabled(true);
+        rob.setEnabled(true);
+    }
+
+    public void enableActionButton(){
+        action.setEnabled(true);
+    }
+
+    public void disableActionsButtons(){
+        up.setEnabled(false);
+        down.setEnabled(false);
+        left.setEnabled(false);
+        right.setEnabled(false);
+        shootUp.setEnabled(false);
+        shootDown.setEnabled(false);
+        shootLeft.setEnabled(false);
+        shootRight.setEnabled(false);
+        rob.setEnabled(false);
+    }
+
+    public void disableActionButton(){
+        action.setEnabled(false);
     }
 }
