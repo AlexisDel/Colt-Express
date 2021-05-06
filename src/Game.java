@@ -19,7 +19,7 @@ public class Game {
                     gameEngine.update();
                 }
             }
-        }, 0, 100);
+        }, 0, 20);
 
         Timer t2 = new Timer();
         t2.schedule(new TimerTask() {

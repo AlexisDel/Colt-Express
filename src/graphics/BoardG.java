@@ -19,10 +19,15 @@ public class BoardG extends JPanel {
     final int PANEL_HEIGHT = 500;
 
     int railwaysX = 0;
-    int railwaysVelocity = 10;
+    int railwaysXVelocity = 10;
 
     int backgroundX = 0;
-    int backgroundVelocity = 5;
+    int backgroundXVelocity = 5;
+
+    private boolean startScreen = true;
+
+    int backgroundY = 0;
+    int backgroundYVelocity = 15;
 
     private Image background;
     private Image railways;
@@ -37,7 +42,6 @@ public class BoardG extends JPanel {
     private Image coinImage;
     private Image gunImage;
 
-    private JLabel gameStateLabel;
     private Font font;
 
     public BoardG(Train train, GameEngine gameEngine) {
@@ -74,24 +78,37 @@ public class BoardG extends JPanel {
 
     }
 
+    private void updateXAnimation(){
+
+        this.railwaysX -= this.railwaysXVelocity;
+
+        if (this.railwaysX < -1000) {
+            this.railwaysX = 0;
+        }
+
+        this.backgroundX -= this.backgroundXVelocity;
+
+        if (this.backgroundX < -1000) {
+            this.backgroundX = 0;
+        }
+    }
+
+    private void  updateYAnimation(){
+
+        this.backgroundY -= this.backgroundYVelocity;
+
+        if (this.backgroundY < -500){
+            this.startScreen = false;
+            this.backgroundY = -500;
+        }
+
+    }
+
     private void drawBackground(Graphics2D g2D) {
 
-        railwaysX -= railwaysVelocity;
-
-        if (railwaysX < -1000) {
-            railwaysX = 0;
-        }
-
-        backgroundX -= backgroundVelocity;
-
-        if (backgroundX < -1000) {
-            backgroundX = 0;
-        }
-
-        g2D.drawImage(background, backgroundX, 0, null);
-        g2D.drawImage(railways, railwaysX, 415, null);
-        g2D.drawImage(trainImage, 138, 352, null);
-
+        g2D.drawImage(background, this.backgroundX, this.backgroundY, null);
+        g2D.drawImage(railways, this.railwaysX, this.backgroundY, null);
+        g2D.drawImage(trainImage, 0, this.backgroundY, null);
     }
 
     private void drawEntities(Graphics2D g2D) {
@@ -155,8 +172,14 @@ public class BoardG extends JPanel {
         Graphics2D g2D = (Graphics2D) g;
 
         drawBackground(g2D);
-        drawEntities(g2D);
-        drawHUD(g2D);
+
+        if (startScreen) {
+            updateYAnimation();
+        } else {
+            updateXAnimation();
+            drawEntities(g2D);
+            drawHUD(g2D);
+        }
 
 
     }

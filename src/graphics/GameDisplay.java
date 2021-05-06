@@ -11,7 +11,7 @@ public class GameDisplay extends JFrame {
     public Buttons buttons;
     BoardG boardG;
 
-    public GameDisplay(GameEngine gameEngine){
+    public GameDisplay(GameEngine gameEngine) {
 
         this.gameEngine = gameEngine;
 
@@ -19,7 +19,7 @@ public class GameDisplay extends JFrame {
         this.add(this.buttons, BorderLayout.SOUTH);
 
         this.boardG = new BoardG(gameEngine.getTrain(), gameEngine);
-        this.add(this.boardG, BorderLayout.NORTH);
+        this.add(boardG, BorderLayout.CENTER);
 
         this.setTitle("Colt Express");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +28,7 @@ public class GameDisplay extends JFrame {
         this.setVisible(true);
     }
 
-    public void update(){
+    public void update() {
         this.boardG.update();
     }
 }
