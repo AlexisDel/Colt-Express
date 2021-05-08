@@ -151,14 +151,14 @@ public class BoardG extends JPanel {
         g2D.drawString(("Player 1"), 50, 50);
         g2D.drawString(String.valueOf(train.getBandits().get(0).getMoney()), 75, 80);
         g2D.drawImage(coinImage, 50, 63, null);
-        for (int i = 0; i<5; i++){
+        for (int i = 0; i<train.getBandits().get(0).getBullets(); i++){
             g2D.drawImage(gunImage, (50 + i*20), 86, null);
         }
 
         g2D.drawString(("Player 2"), 850, 50);
         g2D.drawString(String.valueOf(train.getBandits().get(1).getMoney()), 875, 80);
         g2D.drawImage(coinImage, 850, 63, null);
-        for (int i = 0; i<5; i++){
+        for (int i = 0; i<train.getBandits().get(1).getBullets(); i++){
             g2D.drawImage(gunImage, (850 + i*20), 86, null);
         }
 

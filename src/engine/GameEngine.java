@@ -32,7 +32,7 @@ public class GameEngine {
         this.train = new Train();
         //Adds players in the String list, setups the marshall and the bounty
         //TODO: ask for input for the player names? No names also possible by only asking nbr of players
-        String[] players = new String[]{"CrocoMechant", "Fantiks"};
+        String[] players = new String[]{"Brown", "Black"};
         setupEntities(players);
 
         this.gameController = new GameController(this);

@@ -23,30 +23,37 @@ public class Character extends Entity {
     public void move(Direction direction) {
 
         //TODO: UNIT TESTS
+        //disables Marshall notifications
+        boolean notify=true;
+        if(this.name=="Marshall"){notify=false;}
 
         switch (direction) {
             case LEFT -> {
                 if (this.x > 0) {
                     this.x--;
-                    System.out.println(this.name + " took his left");
+                    if(notify)
+                    System.out.println(this.name + " has moved left");
                 }
             }
             case RIGHT -> {
                 if (this.x < this.train.getTrainLength() - 1) {
                     this.x++;
-                    System.out.println(this.name + " took his right");
+                    if(notify)
+                    System.out.println(this.name + " has moved right");
                 }
             }
             case UP -> {
                 if (this.y == 1) {
                     this.y--;
-                    System.out.println(this.name + " went up");
+                    if(notify)
+                    System.out.println(this.name + " has moved up");
                 }
             }
             case DOWN -> {
                 if (this.y == 0) {
                     this.y++;
-                    System.out.println(this.name + " went down");
+                    if(notify)
+                    System.out.println(this.name + " has moved down");
                 }
             }
 

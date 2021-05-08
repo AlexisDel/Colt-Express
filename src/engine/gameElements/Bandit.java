@@ -10,17 +10,29 @@ import java.util.Random;
 public class Bandit extends Character {
     private ArrayList<Bounty> bounties;
     private List<Action> actions;
+    private int bullets;
 
     public Bandit(String type, String name, Train train, int abs, int ord) {
         super(type, name, train, abs, ord);
         this.bounties = new ArrayList<>();
         this.actions = new ArrayList<>();
+        this.bullets=5;
 
     }
 
     public void addBounty(Bounty b) {
         this.bounties.add(b);
     }
+
+    public int getMoney() {
+        int sum = 0;
+        for (Bounty b : this.bounties) {
+            sum += b.value;
+        }
+        return sum;
+    }
+
+    public int getBullets(){return this.bullets;}
 
     public List<Action> getActions() {
         return this.actions;
@@ -47,60 +59,54 @@ public class Bandit extends Character {
     }
 
     public void shoot(Direction d) {
-        switch (d) {
-            case LEFT -> {
-                //axis= x (true)
-                shootTargets(this.x, 0, true);
-
-                System.out.println(this.getName() + " shot left");
-            }
-            case RIGHT -> {
-                //axis= x (true)
-                shootTargets(this.x, this.train.getTrainLength() - 1, true);
-
-                System.out.println(this.getName() + " shot right");
-            }
-            case UP -> {
-                //axis= y (false)
-                shootTargets(this.y, 0, false);
-
-                System.out.println(this.getName() + " shot up");
-            }
-            case DOWN -> {
-                //axis= y (false)
-                shootTargets(this.y, 1, false);
-
-                System.out.println(this.getName() + " shot down");
-            }
-        }
-    }
-
-    public void shootTargets(int from, int to, boolean axis) {
-        String targets = "";
-        for (int position = from; position <= to; position++) {
-
+        if(this.bullets>0) {
+            //if bandit shoots, reduce his bullets by one
+            this.bullets--;
+            //Extract the bandits that are valid targets
+            List<Bandit> targets = new ArrayList<>();
             for (Bandit b : this.train.getBandits()) {
-                //disable shoot yourself
                 if (!b.equals(this)) {
-                    //shoot left or right
-                    if (axis) {
-                        if (b.getX() == position && b.getY() == this.y) {
-                            targets = targets + b.getName();
-                            b.dropBounty();
-                        }
-                    }
-                    //shoot up or down
-                    else {
-                        if (b.getX() == this.x && b.getY() == position) {
-                            targets = targets + " " + b.getName();
-                            b.dropBounty();
-                        }
-                    }
-
+                    targets.add(b);
                 }
             }
+            //Shoot in the desired direction
+            switch (d) {
+                case LEFT -> {
+                    for (Bandit b : targets) {
+                        if (this.y == b.getY() && this.x > b.getX()) {
+                            b.dropBounty();
+                            System.out.println(this.getName() + " shot " + b.getName());
+                        }
+                    }
+                }
+                case RIGHT -> {
+                    for (Bandit b : targets) {
+                        if (this.y == b.getY() && this.x < b.getX()) {
+                            b.dropBounty();
+                            System.out.println(this.getName() + " shot " + b.getName());
+                        }
+                    }
+                }
+                case UP -> {
+                    for (Bandit b : targets) {
+                        if ((this.x == b.getX() && this.y > b.getY()) || (this.x == b.getX() && this.y == b.getY() && this.y == 0)) {
+                            b.dropBounty();
+                            System.out.println(this.getName() + " shot " + b.getName());
+                        }
+                    }
+                }
+                case DOWN -> {
+                    for (Bandit b : targets) {
+                        if ((this.x == b.getX() && this.y < b.getY()) || (this.x == b.getX() && this.y == b.getY() && this.y == 1)) {
+                            b.dropBounty();
+                            System.out.println(this.getName() + " shot " + b.getName());
+                        }
+                    }
+                }
+            }
+        }else{
+            System.out.println(this.getName()+" ran out of bullets");
         }
-        System.out.println(this.getName() + " shot " + targets);
     }
 
     public void dropBounty() {
@@ -112,14 +118,6 @@ public class Bandit extends Character {
             selectedBounty.moveTo(this.x, this.y);
             this.train.addEntity(selectedBounty);
         }
-    }
-
-    public int getMoney() {
-        int sum = 0;
-        for (Bounty b : this.bounties) {
-            sum += b.value;
-        }
-        return sum;
     }
 
     public void doAction(Action a) {
@@ -156,11 +154,6 @@ public class Bandit extends Character {
 
         }
     }
-
-    public void setActionsTo(List<Action> a) {
-        this.actions = a;
-    }
-
 
     //TODO: throw exception if any actions are null
     public void update() {
