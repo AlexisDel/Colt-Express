@@ -5,7 +5,8 @@ import main.engine.utils.Direction;
 import java.util.Random;
 
 public class Marshall extends Character {
-    private final float NERVOSITE_MARSHALL;
+    private double NERVOSITE_MARSHALL;
+    private boolean stunned;
 
     /**
      * Returns a Marshall Object
@@ -13,7 +14,9 @@ public class Marshall extends Character {
     public Marshall(Train train, int abs) {
         super("Marshall", train, abs, 1);
         this.NERVOSITE_MARSHALL = (float) 0.3;
+        this.stunned=false;
     }
+    public void stun(){this.stunned=true;}
 
     /**
      * Automatically moves the Marshall in a random direction (left or right)
@@ -51,10 +54,14 @@ public class Marshall extends Character {
     }
 
     /**
-     * moves the marshall and verifies if it can catch a bandit at his new position
+     * moves the marshall if he has not been stunned(shot)
+     * and verifies if it can catch a bandit at his position
      */
     public void update() {
-        autoMove();
+        if(!this.stunned){ autoMove();}
+        else{this.NERVOSITE_MARSHALL+= 0.01;}
         catchBandit();
+        //Sets back the Marshall to not stunned
+        this.stunned=false;
     }
 }

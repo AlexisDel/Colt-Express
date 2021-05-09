@@ -112,7 +112,8 @@ public class Bandit extends Character {
             //if bandit shoots, reduce his bullets by one
             this.bullets--;
             //Extract the bandits that are valid targets (All but himself)
-            List<Bandit> targets = new ArrayList<>();
+            List<Character> targets = new ArrayList<>();
+            targets.add(this.train.getMarshall());
             for (Bandit b : this.train.getBandits()) {
                 if (!b.equals(this)) {
                     targets.add(b);
@@ -121,37 +122,49 @@ public class Bandit extends Character {
             //Shoot in the desired direction
             switch (d) {
                 case LEFT -> {
-                    for (Bandit b : targets) {
+                    for (Character b : targets) {
                         if (this.y == b.getY() && this.x > b.getX()) {
-                            //if a target is found make him drop his bounty
-                            b.dropBounty();
+                            //if a target is found make him drop his bounty if he is a bandit
+                            if(b instanceof Bandit) { ((Bandit) b).dropBounty();
+                            }
+                            //if he is the marshall, stun him
+                            else{((Marshall)b).stun();}
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
                     }
                 }
                 case RIGHT -> {
-                    for (Bandit b : targets) {
+                    for (Character b : targets) {
                         if (this.y == b.getY() && this.x < b.getX()) {
-                            //if a target is found make him drop his bounty
-                            b.dropBounty();
+                            //if a target is found make him drop his bounty if he is a bandit
+                            if(b instanceof Bandit) { ((Bandit) b).dropBounty();
+                            }
+                            //if he is the marshall, stun him
+                            else{((Marshall)b).stun();}
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
                     }
                 }
                 case UP -> {
-                    for (Bandit b : targets) {
+                    for (Character b : targets) {
                         if ((this.x == b.getX() && this.y > b.getY()) || (this.x == b.getX() && this.y == b.getY() && this.y == 0)) {
-                            //if a target is found make him drop his bounty
-                            b.dropBounty();
+                            //if a target is found make him drop his bounty if he is a bandit
+                            if(b instanceof Bandit) { ((Bandit) b).dropBounty();
+                            }
+                            //if he is the marshall, stun him
+                            else{((Marshall)b).stun();}
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
                     }
                 }
                 case DOWN -> {
-                    for (Bandit b : targets) {
+                    for (Character b : targets) {
                         if ((this.x == b.getX() && this.y < b.getY()) || (this.x == b.getX() && this.y == b.getY() && this.y == 1)) {
-                            //if a target is found make him drop his bounty
-                            b.dropBounty();
+                            //if a target is found make him drop his bounty if he is a bandit
+                            if(b instanceof Bandit) { ((Bandit) b).dropBounty();
+                            }
+                            //if he is the marshall, stun him
+                            else{((Marshall)b).stun();}
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
                     }
