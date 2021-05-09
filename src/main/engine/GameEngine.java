@@ -1,13 +1,13 @@
-package engine;
+package main.engine;
 
-import controller.GameController;
-import engine.gameElements.Bandit;
-import engine.gameElements.Bounty;
-import engine.gameElements.Marshall;
-import engine.gameElements.Train;
-import engine.utils.Action;
-import engine.utils.Direction;
-import graphics.GameDisplay;
+import main.controller.GameController;
+import main.engine.gameElements.Bandit;
+import main.engine.gameElements.Bounty;
+import main.engine.gameElements.Marshall;
+import main.engine.gameElements.Train;
+import main.engine.utils.Action;
+import main.engine.utils.GameState;
+import main.graphics.GameDisplay;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

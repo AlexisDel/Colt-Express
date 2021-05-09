@@ -1,6 +1,8 @@
-package graphics;
+package main.graphics;
 
-import engine.GameEngine;
+import main.engine.GameEngine;
+import main.graphics.graphicElements.BoardG;
+import main.graphics.graphicElements.Buttons;
 
 import javax.swing.*;
 import java.awt.*;

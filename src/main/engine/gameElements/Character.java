@@ -1,6 +1,6 @@
-package engine.gameElements;
+package main.engine.gameElements;
 
-import engine.utils.Direction;
+import main.engine.utils.Direction;
 
 public class Character extends Entity {
 

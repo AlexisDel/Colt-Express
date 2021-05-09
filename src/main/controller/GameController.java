@@ -1,12 +1,10 @@
-package controller;
+package main.controller;
 
-import engine.gameElements.Bandit;
-import engine.utils.Action;
-import engine.GameEngine;
-import engine.GameState;
+import main.engine.utils.Action;
+import main.engine.GameEngine;
+import main.engine.utils.GameState;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameController {

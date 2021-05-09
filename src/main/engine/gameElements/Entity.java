@@ -1,4 +1,4 @@
-package engine.gameElements;
+package main.engine.gameElements;
 
 public class Entity {
     protected int x, y;

@@ -1,7 +1,7 @@
-package engine.gameElements;
+package main.engine.gameElements;
 
-import engine.utils.Action;
-import engine.utils.Direction;
+import main.engine.utils.Action;
+import main.engine.utils.Direction;
 
 import java.util.ArrayList;
 import java.util.List;

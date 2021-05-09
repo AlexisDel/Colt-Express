@@ -1,4 +1,4 @@
-package graphics.utils;
+package main.graphics.utils;
 
 import java.awt.*;
 

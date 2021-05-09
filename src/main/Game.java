@@ -1,4 +1,6 @@
-import engine.GameEngine;
+package main;
+
+import main.engine.GameEngine;
 
 import java.util.Timer;
 import java.util.TimerTask;

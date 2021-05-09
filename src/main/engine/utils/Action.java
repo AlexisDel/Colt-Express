@@ -1,4 +1,4 @@
-package engine.utils;
+package main.engine.utils;
 
 public enum Action {
     MOVE_UP,
