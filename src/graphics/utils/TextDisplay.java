@@ -4,7 +4,14 @@ import java.awt.*;
 
 public class TextDisplay {
 
-    public static void drawCenteredString(Graphics g2D, String text, Rectangle boxIn ) {
+    /**
+     * Displays a string centered in a rectangle
+     *
+     * @param g2D
+     * @param text
+     * @param boxIn
+     */
+    public static void drawCenteredString(Graphics g2D, String text, Rectangle boxIn) {
 
         FontMetrics fm = g2D.getFontMetrics();
 

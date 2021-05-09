@@ -20,9 +20,9 @@ public class Buttons extends JPanel {
     private JButton rob = new JButton("Braque");
     private JButton action = new JButton("Action !");
 
-    public Buttons(GameController gameController){
+    public Buttons(GameController gameController) {
 
-        // Setup controller.GameController ActionListener
+        // Adds ActionListener to the buttons
         up.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,13 +84,13 @@ public class Buttons extends JPanel {
             }
         });
 
-        // Setup controller.GameController display
+        // Configures the Buttons panel display
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
         this.setPreferredSize(new Dimension(1000, 60));
-        this.setLayout(new GridLayout(1,10));
+        this.setLayout(new GridLayout(1, 10));
 
 
-        // Ads buttons
+        // Adds the buttons to the panel
         this.add(up);
         this.add(down);
         this.add(left);
@@ -103,7 +103,7 @@ public class Buttons extends JPanel {
         this.add(action);
     }
 
-    public void enableActionsButtons(){
+    public void enableActionsButtons() {
         up.setEnabled(true);
         down.setEnabled(true);
         left.setEnabled(true);
@@ -115,11 +115,11 @@ public class Buttons extends JPanel {
         rob.setEnabled(true);
     }
 
-    public void enableActionButton(){
+    public void enableActionButton() {
         action.setEnabled(true);
     }
 
-    public void disableActionsButtons(){
+    public void disableActionsButtons() {
         up.setEnabled(false);
         down.setEnabled(false);
         left.setEnabled(false);
@@ -131,7 +131,7 @@ public class Buttons extends JPanel {
         rob.setEnabled(false);
     }
 
-    public void disableActionButton(){
+    public void disableActionButton() {
         action.setEnabled(false);
     }
 }

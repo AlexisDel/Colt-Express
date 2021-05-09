@@ -7,20 +7,28 @@ import java.awt.*;
 
 public class GameDisplay extends JFrame {
 
-    GameEngine gameEngine;
+    private GameEngine gameEngine;
+    private BoardG boardG;
     public Buttons buttons;
-    BoardG boardG;
 
+    /**
+     * Handles GUI
+     *
+     * @param gameEngine
+     */
     public GameDisplay(GameEngine gameEngine) {
 
         this.gameEngine = gameEngine;
 
+        // Creates the buttons and adds them to the window
         this.buttons = new Buttons(gameEngine.gameController);
         this.add(this.buttons, BorderLayout.SOUTH);
 
+        // Creates the graphical interface and adds it to the window
         this.boardG = new BoardG(gameEngine.getTrain(), gameEngine);
-        this.add(boardG, BorderLayout.CENTER);
+        this.add(boardG, BorderLayout.NORTH);
 
+        // Window settings
         this.setTitle("Colt Express");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -28,6 +36,9 @@ public class GameDisplay extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Updates graphical components that needs to
+     */
     public void update() {
         this.boardG.update();
     }

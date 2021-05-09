@@ -15,28 +15,28 @@ public class BoardG extends JPanel {
 
     private Train train;
     private GameEngine gameEngine;
+    private boolean startScreen;
 
-    final int PANEL_WIDTH = 1000;
-    final int PANEL_HEIGHT = 500;
+    // Positions & Sizes
+    private final int PANEL_WIDTH = 1000;
+    private final int PANEL_HEIGHT = 500;
+    private final int MAIN_HUD_X = PANEL_WIDTH / 2 - 50;
+    private final int MAIN_HUD_WIDTH = 100;
+    private final int MAIN_HUD_HEIGHT = 50;
 
-    int railwaysX = 0;
-    int railwaysXVelocity = 10;
+    //Animations
+    private int railwaysX = 0;
+    private final int railwaysXVelocity = 10;
 
-    int backgroundX = 0;
-    int backgroundXVelocity = 5;
+    private int backgroundX = 0;
+    private final int backgroundXVelocity = 5;
 
-    private boolean startScreen = true;
+    private int backgroundY = 0;
+    private final int backgroundYVelocity = 15;
 
-    int backgroundY = 0;
-    int backgroundYVelocity = 15;
-
-    int mainRectDisplayX = PANEL_WIDTH/2 - 50;
-    int mainRectDisplayWidth = 100;
-    int mainRectDisplayHeight = 50;
-
+    // Images
     private Image background;
     private Image railways;
-
     private Image trainImage;
     private Image bandit1Image;
     private Image bandit2Image;
@@ -53,11 +53,12 @@ public class BoardG extends JPanel {
 
         this.train = train;
         this.gameEngine = gameEngine;
+        this.startScreen = true;
 
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.red);
 
-        // Load images
+        // Loads images
         try {
             background = ImageIO.read(new File("ressources", "background.png"));
             railways = ImageIO.read(new File("ressources", "railways.png"));
@@ -74,7 +75,7 @@ public class BoardG extends JPanel {
             e.printStackTrace();
         }
 
-        // Load font
+        // Loads font
         try {
             this.font = Font.createFont(Font.TRUETYPE_FONT, new File("ressources", "The Bandido.otf"));
         } catch (Exception e) {
@@ -83,30 +84,32 @@ public class BoardG extends JPanel {
 
     }
 
-    private void updateXAnimation(){
+    /**
+     * Updates X position of railways and background to create infinite movement effect
+     */
+    private void updateXAnimation() {
 
         this.railwaysX -= this.railwaysXVelocity;
-
         if (this.railwaysX < -1000) {
             this.railwaysX = 0;
         }
 
         this.backgroundX -= this.backgroundXVelocity;
-
         if (this.backgroundX < -1000) {
             this.backgroundX = 0;
         }
     }
 
-    private void  updateYAnimation(){
+    /**
+     * Updates Y position of background to create the starting animation
+     */
+    private void updateYAnimation() {
 
         this.backgroundY -= this.backgroundYVelocity;
-
-        if (this.backgroundY < -500){
+        if (this.backgroundY < -500) {
             this.startScreen = false;
             this.backgroundY = -500;
         }
-
     }
 
     private void drawBackground(Graphics2D g2D) {
@@ -118,7 +121,6 @@ public class BoardG extends JPanel {
 
     private void drawEntities(Graphics2D g2D) {
 
-        //TODO : use ID instead of instances (to get treasure and other bounty types)
         for (Entity e : train.getEntities()) {
 
             Image image = switch (e.getType()) {
@@ -130,42 +132,43 @@ public class BoardG extends JPanel {
                 case "Bag" -> bagImage;
                 default -> null;
             };
-
             g2D.drawImage(image, Positions.positions[e.getY()][e.getX()][0], Positions.positions[e.getY()][e.getX()][1], null);
         }
 
     }
 
     private void drawHUD(Graphics2D g2D) {
+
+        // Main Hud settings
         g2D.setFont(this.font.deriveFont(Font.BOLD, 40));
         g2D.setPaint(Color.gray);
 
-        TextDisplay.drawCenteredString(g2D, gameEngine.gameState.toString(), new Rectangle(mainRectDisplayX, 25, mainRectDisplayWidth, mainRectDisplayHeight));
+        // Main HUD
+        TextDisplay.drawCenteredString(g2D, gameEngine.gameState.toString(), new Rectangle(MAIN_HUD_X, 25, MAIN_HUD_WIDTH, MAIN_HUD_HEIGHT));
         if (gameEngine.gameController.getPlayerTurnAsString() != null) {
-            TextDisplay.drawCenteredString(g2D, gameEngine.gameController.getPlayerTurnAsString(), new Rectangle(mainRectDisplayX, 75, mainRectDisplayWidth, mainRectDisplayHeight));
-            TextDisplay.drawCenteredString(g2D, gameEngine.gameController.getClickLeftPerPlayerAsString(), new Rectangle(mainRectDisplayX, 125, mainRectDisplayWidth, mainRectDisplayHeight));
+            TextDisplay.drawCenteredString(g2D, gameEngine.gameController.getPlayerTurnAsString(), new Rectangle(MAIN_HUD_X, 75, MAIN_HUD_WIDTH, MAIN_HUD_HEIGHT));
+            TextDisplay.drawCenteredString(g2D, gameEngine.gameController.getClickLeftPerPlayerAsString(), new Rectangle(MAIN_HUD_X, 125, MAIN_HUD_WIDTH, MAIN_HUD_HEIGHT));
         }
 
+        // Players HUD settings
         g2D.setFont(new Font("Arial", Font.BOLD, 25));
         g2D.setPaint(Color.lightGray);
 
+        // Player 1 HUD
         g2D.drawString("Player 1", 50, 50);
         g2D.drawString(String.valueOf(train.getBandits().get(0).getMoney()), 75, 80);
         g2D.drawImage(coinImage, 50, 63, null);
-        for (int i = 0; i<train.getBandits().get(0).getBullets(); i++){
-            g2D.drawImage(gunImage, (50 + i*20), 86, null);
+        for (int i = 0; i < train.getBandits().get(0).getBullets(); i++) {
+            g2D.drawImage(gunImage, (50 + i * 20), 86, null);
         }
 
+        // Player 2 HUD
         g2D.drawString(("Player 2"), 850, 50);
         g2D.drawString(String.valueOf(train.getBandits().get(1).getMoney()), 875, 80);
         g2D.drawImage(coinImage, 850, 63, null);
-        for (int i = 0; i<train.getBandits().get(1).getBullets(); i++){
-            g2D.drawImage(gunImage, (850 + i*20), 86, null);
+        for (int i = 0; i < train.getBandits().get(1).getBullets(); i++) {
+            g2D.drawImage(gunImage, (850 + i * 20), 86, null);
         }
-
-
-
-
     }
 
     public void paint(Graphics g) {
@@ -181,8 +184,6 @@ public class BoardG extends JPanel {
             drawEntities(g2D);
             drawHUD(g2D);
         }
-
-
     }
 
     public void update() {
