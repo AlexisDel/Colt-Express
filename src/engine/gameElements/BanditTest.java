@@ -1,5 +1,6 @@
 package engine.gameElements;
 
+import engine.utils.Action;
 import engine.utils.Direction;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BanditTest {
 
     /**
-     * Tests the rob action for the bandit and other complementaru methods
+     * Tests the rob action for the bandit and other complementary methods
      */
     @Test
     void rob() {
@@ -122,7 +123,7 @@ class BanditTest {
     }
 
     /**
-     * Tests the shoot action for the bandit and other complementaru methods
+     * Tests the shoot action for the bandit and other complementary methods
      */
     @Test
     void shoot() {
@@ -240,38 +241,38 @@ class BanditTest {
 
 
     /**
-     * Tests the move action for the bandit and other complementaru methods
+     * Tests the move action for the bandit and other complementary methods
      */
     @Test
     void doAction() {
         Train testTrain= new Train();
         Bandit testSubject= new Bandit("bandit1", "Pierre", testTrain,0,0);
-        testSubject.move(Direction.LEFT);
+        testSubject.doAction(Action.MOVE_LEFT);
         assertEquals(0,testSubject.getX());
         assertEquals(0,testSubject.getY());
 
-        testSubject.move(Direction.DOWN);
-        testSubject.move(Direction.LEFT);
+        testSubject.doAction(Action.MOVE_DOWN);
+        testSubject.doAction(Action.MOVE_LEFT);
         assertEquals(0,testSubject.getX());
         assertEquals(1,testSubject.getY());
 
-        testSubject.move(Direction.RIGHT);
-        testSubject.move(Direction.RIGHT);
-        testSubject.move(Direction.RIGHT);
-        testSubject.move(Direction.RIGHT);
-        testSubject.move(Direction.RIGHT);
+        testSubject.doAction(Action.MOVE_RIGHT);
+        testSubject.doAction(Action.MOVE_RIGHT);
+        testSubject.doAction(Action.MOVE_RIGHT);
+        testSubject.doAction(Action.MOVE_RIGHT);
+        testSubject.doAction(Action.MOVE_RIGHT);
         assertEquals(3,testSubject.getX());
         assertEquals(1,testSubject.getY());
 
-        testSubject.move(Direction.DOWN);
-        testSubject.move(Direction.DOWN);
-        testSubject.move(Direction.DOWN);
+        testSubject.doAction(Action.MOVE_DOWN);
+        testSubject.doAction(Action.MOVE_DOWN);
+        testSubject.doAction(Action.MOVE_DOWN);
         assertEquals(3,testSubject.getX());
         assertEquals(1,testSubject.getY());
 
-        testSubject.move(Direction.UP);
-        testSubject.move(Direction.UP);
-        testSubject.move(Direction.UP);
+        testSubject.doAction(Action.MOVE_UP);
+        testSubject.doAction(Action.MOVE_UP);
+        testSubject.doAction(Action.MOVE_UP);
         assertEquals(3,testSubject.getX());
         assertEquals(0,testSubject.getY());
 

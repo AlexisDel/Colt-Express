@@ -23,48 +23,54 @@ public class GameEngine {
 
     private Train train;
     private boolean actionButtonPushed;
-
+    /**
+     * returns GameEngine object
+     */
     public GameEngine() {
         this.actionButtonPushed = false;
         this.isGameFinished = false;
         this.gameState = GameState.PLANNING;
-
         this.train = new Train();
-        //Adds players in the String list, setups the marshall and the bounty
-        //TODO: ask for input for the player names? No names also possible by only asking nbr of players
+        //Adds players with names in the String list, setups the marshall and the bounty
         String[] players = new String[]{"Brown", "Black"};
         setupEntities(players);
-
         this.gameController = new GameController(this);
         this.gameDisplay = new GameDisplay(this);
-
     }
-
+    /**
+     * Gets the GameEngine's train
+     * @return Train
+     */
     public Train getTrain() {
         return this.train;
     }
 
+    /**
+     * Sets the actionButtonPushed attribute to a specific boolean
+     */
     public boolean setActionButtonPushed(boolean b) {
         return this.actionButtonPushed = b;
     }
 
+    /**
+     * Sets up all the entities (creates them and adds to the train entity list)
+     */
     public void setupEntities(String[] playerNames) {
         //Spawns the bounty
         genBounty();
-        //Setup players
+        //Setup all player's bandits
         for (int i = 0; i < playerNames.length; i++) {
             Bandit player = new Bandit(("Bandit" + i), playerNames[i], this.train, i % this.train.getTrainLength(), 0);
             this.train.addEntity(player);
         }
-
         //Spawns the marshall
         Marshall marshall = new Marshall(this.train, this.train.getTrainLength() - 1);
         this.train.addEntity(marshall);
-
-
     }
 
-    //This function randomly generates the bounty inside the train
+    /**
+     * Method randomly generates all the bounty inside the train
+     */
     public void genBounty() {
         //Locomotive bounty
         Bounty treasure = new Bounty("Treasure", this.train, train.getTrainLength() - 1, 1000);
@@ -90,7 +96,11 @@ public class GameEngine {
         }
     }
 
-
+    /**
+     * Verifies for each bandit if all actions in his actions list have been executed (actions list is empty)
+     * @param b list of bandits
+     * @return boolean
+     */
     public boolean allActionsExecuted(List<Bandit> b) {
         for (Bandit bandit : b) {
             if (bandit.getActions().size() != 0) {
@@ -100,6 +110,11 @@ public class GameEngine {
         return true;
     }
 
+    /**
+     * Gives each player's bandit its actions list
+     * from an input actionList (passed by gameController in GameEngine update method)
+     * @param actionList the action list containing all actions for all player's bandits
+     */
     public void setupPlayersActions(List<Action> actionList) {
         if (actionList.size() != 0) {
 
@@ -110,7 +125,9 @@ public class GameEngine {
             }
         }
     }
-
+    /**
+     * Enables or disables the action/planning control buttons (used by the graphic classes)
+     */
     private void handleButtons() {
         if (gameController.getActions().size() < 4) {
             gameDisplay.buttons.enableActionsButtons();
@@ -121,9 +138,12 @@ public class GameEngine {
             gameDisplay.buttons.enableActionButton();
         }
     }
-
+    /**
+     * Updates the game engine, main update method repeated in each game loop in the Game class
+     */
     public void update() {
         if (this.gameState == GameState.ACTION) {
+            //Action State
             if (actionButtonPushed) {
                 for (Bandit b : this.train.getBandits()) {
                     b.update();
@@ -135,7 +155,9 @@ public class GameEngine {
                 }
                 actionButtonPushed = false;
             }
-        } else {
+        }
+        else {
+            //Planning State
             setupPlayersActions(gameController.getActions());
         }
         handleButtons();
