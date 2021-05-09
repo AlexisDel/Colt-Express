@@ -89,7 +89,7 @@ class BanditTest {
 
         assertEquals(1,testSubject3.getBounty().size());
         assertEquals(1,testSubject4.getBounty().size());
-        assertTrue(testSubject3.getMoney()==500 ||testSubject4.getMoney()==1000);
+        assertTrue(testSubject3.getMoney()==500 ||testSubject3.getMoney()==1000);
         assertTrue(testSubject4.getMoney()==500 ||testSubject4.getMoney()==1000);
         testSubject3.dropBounty();
         testSubject4.dropBounty();
@@ -109,6 +109,8 @@ class BanditTest {
         Train testTrain= new Train();
         Bandit testSubject1= new Bandit("bandit1", "Manson", testTrain,0,1 );
         Bandit testSubject2= new Bandit("bandit1", "Kemper", testTrain,2,1 );
+        testTrain.addEntity(testSubject1);
+        testTrain.addEntity(testSubject2);
         assertEquals(0,testSubject1.getBounty().size());
         assertEquals(0,testSubject2.getBounty().size());
         assertEquals(5,testSubject1.getBullets());
@@ -127,9 +129,92 @@ class BanditTest {
         assertEquals(4,testSubject2.getBullets());
 
 
+        System.out.println("NEW SCENARIO");
 
-        Bounty b1= new Bounty("test", testTrain, 0, 1000);
-        Bounty b2= new Bounty("test", testTrain, 0, 1000);
+        Bounty b1= new Bounty("treasure", testTrain, 0, 1000);
+        Bounty b2= new Bounty("treasure", testTrain, 2, 1000);
+        Bounty b12= new Bounty("bag", testTrain, 0, 200);
+        Bounty b22= new Bounty("bag", testTrain, 2, 100);
+        testTrain.addEntity(b1);
+        testTrain.addEntity(b2);
+        testTrain.addEntity(b12);
+        testTrain.addEntity(b22);
+
+        testSubject1.rob();
+        testSubject2.rob();
+        testSubject1.rob();
+        testSubject2.rob();
+        //Move both bandits to same position inside train:
+        testSubject1.move(Direction.RIGHT);
+        testSubject1.move(Direction.RIGHT);
+        testSubject1.shoot(Direction.DOWN);
+        assertEquals(2,testSubject1.getX());
+        assertEquals(2,testSubject2.getX());
+        assertEquals(1,testSubject1.getY());
+        assertEquals(1,testSubject2.getY());
+
+        assertEquals(2,testSubject1.getBounty().size());
+        assertEquals(1,testSubject2.getBounty().size());
+        assertEquals(3,testSubject1.getBullets());
+        assertEquals(4,testSubject2.getBullets());
+
+        //Move one bandit to the roof of the train and shooting in both UP and DOWN direction:
+        System.out.println("NEW SCENARIO");
+        testSubject1.move(Direction.UP);
+
+        assertEquals(2,testSubject1.getX());
+        assertEquals(2,testSubject2.getX());
+        assertEquals(0,testSubject1.getY());
+        assertEquals(1,testSubject2.getY());
+
+        testSubject1.shoot(Direction.DOWN);
+        testSubject2.shoot(Direction.UP);
+
+        assertEquals(1,testSubject1.getBounty().size());
+        assertEquals(0,testSubject2.getBounty().size());
+        assertEquals(2,testSubject1.getBullets());
+        assertEquals(3,testSubject2.getBullets());
+
+        //Move both bandits to the roof of the train and shooting UP:
+
+        System.out.println("NEW SCENARIO");
+        testSubject2.move(Direction.UP);
+
+        assertEquals(2,testSubject1.getX());
+        assertEquals(2,testSubject2.getX());
+        assertEquals(0,testSubject1.getY());
+        assertEquals(0,testSubject2.getY());
+
+        testSubject1.shoot(Direction.UP);
+        testSubject2.shoot(Direction.UP);
+
+        assertEquals(0,testSubject1.getBounty().size());
+        assertEquals(0,testSubject2.getBounty().size());
+        assertEquals(1,testSubject1.getBullets());
+        assertEquals(2,testSubject2.getBullets());
+
+        testSubject1.shoot(Direction.UP);
+        testSubject2.shoot(Direction.UP);
+        assertEquals(0,testSubject1.getBounty().size());
+        assertEquals(0,testSubject2.getBounty().size());
+        assertEquals(0,testSubject1.getBullets());
+        assertEquals(1,testSubject2.getBullets());
+
+        testSubject1.shoot(Direction.UP);
+        testSubject2.shoot(Direction.UP);
+        assertEquals(0,testSubject1.getBounty().size());
+        assertEquals(0,testSubject2.getBounty().size());
+        assertEquals(0,testSubject1.getBullets());
+        assertEquals(0,testSubject2.getBullets());
+
+
+        testSubject1.shoot(Direction.UP);
+        testSubject2.shoot(Direction.UP);
+        assertEquals(0,testSubject1.getBounty().size());
+        assertEquals(0,testSubject2.getBounty().size());
+        assertEquals(0,testSubject1.getBullets());
+        assertEquals(0,testSubject2.getBullets());
+
 
     }
 

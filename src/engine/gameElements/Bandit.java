@@ -157,7 +157,6 @@ public class Bandit extends Character {
         }
     }
 
-    //TODO: throw exception if any actions are null
     public void update() {
         //if the list is not empty
         if (this.actions.size() > 0) {
