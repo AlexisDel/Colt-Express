@@ -3,6 +3,7 @@ package graphics;
 import engine.GameEngine;
 import engine.gameElements.*;
 import graphics.utils.Positions;
+import graphics.utils.TextDisplay;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,6 +29,10 @@ public class BoardG extends JPanel {
 
     int backgroundY = 0;
     int backgroundYVelocity = 15;
+
+    int mainRectDisplayX = PANEL_WIDTH/2 - 50;
+    int mainRectDisplayWidth = 100;
+    int mainRectDisplayHeight = 50;
 
     private Image background;
     private Image railways;
@@ -135,20 +140,16 @@ public class BoardG extends JPanel {
         g2D.setFont(this.font.deriveFont(Font.BOLD, 40));
         g2D.setPaint(Color.gray);
 
-        g2D.drawString(gameEngine.gameState.toString(), 425, 50);
+        TextDisplay.drawCenteredString(g2D, gameEngine.gameState.toString(), new Rectangle(mainRectDisplayX, 25, mainRectDisplayWidth, mainRectDisplayHeight));
         if (gameEngine.gameController.getPlayerTurnAsString() != null) {
-            g2D.drawString(gameEngine.gameController.getPlayerTurnAsString(), 425, 100);
-            g2D.drawString(gameEngine.gameController.getClickLeftPerPlayerAsString(), 425, 150);
-        } else {
-            g2D.drawString(gameEngine.gameController.getClickLeftPerPlayerAsString(), 425, 100);
+            TextDisplay.drawCenteredString(g2D, gameEngine.gameController.getPlayerTurnAsString(), new Rectangle(mainRectDisplayX, 75, mainRectDisplayWidth, mainRectDisplayHeight));
+            TextDisplay.drawCenteredString(g2D, gameEngine.gameController.getClickLeftPerPlayerAsString(), new Rectangle(mainRectDisplayX, 125, mainRectDisplayWidth, mainRectDisplayHeight));
         }
 
         g2D.setFont(new Font("Arial", Font.BOLD, 25));
         g2D.setPaint(Color.lightGray);
 
-        // TODO : replace 5 by bandit.getBullets()
-
-        g2D.drawString(("Player 1"), 50, 50);
+        g2D.drawString("Player 1", 50, 50);
         g2D.drawString(String.valueOf(train.getBandits().get(0).getMoney()), 75, 80);
         g2D.drawImage(coinImage, 50, 63, null);
         for (int i = 0; i<train.getBandits().get(0).getBullets(); i++){

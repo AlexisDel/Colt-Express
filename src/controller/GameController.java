@@ -75,10 +75,8 @@ public class GameController {
     public String getClickLeftPerPlayerAsString() {
         if (getClickLeftPerPlayer() == 2) {
             return "2 actions to determine";
-        } else if (getClickLeftPerPlayer() == 1) {
-            return "1 action to determine";
         } else {
-            return "Press Action !";
+            return "1 action to determine";
         }
     }
 
