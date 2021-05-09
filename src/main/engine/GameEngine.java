@@ -58,12 +58,12 @@ public class GameEngine {
      */
     public void setupEntities(String[] playerNames) {
         //Spawns the bounty
-        //genBounty();
-        Bounty treasure= new Bounty("Treasure", this.train, this.train.getTrainLength()-1,1000);
-        this.train.addEntity(treasure);
-        //Setup all player's bandits
+        genBounty();
+        //Setup all player's bandits with random positions
+        int randomPos;
         for (int i = 0; i < playerNames.length; i++) {
-            Bandit player = new Bandit(("Bandit" + i), playerNames[i], this.train, i % this.train.getTrainLength(), 0);
+            randomPos = ThreadLocalRandom.current().nextInt(0, this.train.getTrainLength() );
+            Bandit player = new Bandit(("Bandit" + i), playerNames[i], this.train, randomPos, 0);
             this.train.addEntity(player);
         }
         //Spawns the marshall

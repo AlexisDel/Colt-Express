@@ -11,7 +11,7 @@ import main.engine.gameElements.Train;
 import main.engine.utils.Direction;
 
 /**
- * Unit tests for all bandit's actions (Rob, shoot, move)
+ * Unit tests for all bandit's actions (Rob, shoot, move) and Marshall catch method
  */
 class BanditTest {
 
@@ -272,7 +272,7 @@ class BanditTest {
         //Testing special situations with marshall, bounty, bandits, shooting and robbing:
         Train testTrain0 = new Train();
         Bandit testSubject1 = new Bandit("bandit1", "Manson", testTrain0, 0, 1);
-        Bandit testSubject2 = new Bandit("bandit1", "Kemper", testTrain0, 0, 1);
+        Bandit testSubject2 = new Bandit("bandit1", "Kemper", testTrain0, 2, 1);
         testTrain0.addEntity(testSubject1);
         testTrain0.addEntity(testSubject2);
         Marshall marshall= new Marshall(testTrain0,1);
@@ -293,7 +293,35 @@ class BanditTest {
 
         testSubject1.doAction(Action.ROB);
         testSubject2.doAction(Action.ROB);
+        assertEquals(1, testSubject1.getBounty().size());
+        assertEquals(1, testSubject2.getBounty().size());
 
+        marshall.move(Direction.LEFT);
+        marshall.catchBandit();
+        assertEquals(0, testSubject1.getBounty().size());
+        assertEquals(1, testSubject2.getBounty().size());
+        testSubject1.doAction(Action.ROB);
+        testSubject2.doAction(Action.ROB);
+        assertEquals(0, testSubject1.getBounty().size());
+        assertEquals(2, testSubject2.getBounty().size());
 
+        testSubject2.move(Direction.UP);
+        testSubject1.addAction(Action.MOVE_DOWN);
+        testSubject1.addAction(Action.ROB);
+        testSubject2.addAction(Action.MOVE_DOWN);
+        testSubject2.addAction(Action.ROB);
+
+        testSubject1.move(Direction.DOWN);
+        marshall.catchBandit();
+        assertEquals(0, testSubject1.getBounty().size());
+        assertEquals(2, testSubject2.getBounty().size());
+        assertEquals(0, testSubject1.getActions().size());
+        assertEquals(2, testSubject2.getActions().size());
+
+        marshall.catchBandit();
+        assertEquals(0, testSubject1.getBounty().size());
+        assertEquals(2, testSubject2.getBounty().size());
+        assertEquals(0, testSubject1.getActions().size());
+        assertEquals(2, testSubject2.getActions().size());
     }
 }
