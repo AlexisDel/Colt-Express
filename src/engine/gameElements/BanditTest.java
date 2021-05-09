@@ -7,10 +7,14 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Unit Test for all 3 Bandit actions and their complementary methods
+/**
+ * Unit tests for all bandit's actions (Rob, shoot, move)
+ */
 class BanditTest {
 
-    //Used to test the rob  action
+    /**
+     * Tests the rob action for the bandit and other complementaru methods
+     */
     @Test
     void rob() {
         Train testTrain= new Train();
@@ -117,7 +121,9 @@ class BanditTest {
 
     }
 
-    //Used to test the shoot action
+    /**
+     * Tests the shoot action for the bandit and other complementaru methods
+     */
     @Test
     void shoot() {
         Train testTrain= new Train();
@@ -233,7 +239,9 @@ class BanditTest {
     }
 
 
-    //Used to test the move action
+    /**
+     * Tests the move action for the bandit and other complementaru methods
+     */
     @Test
     void doAction() {
         Train testTrain= new Train();
