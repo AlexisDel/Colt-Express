@@ -24,6 +24,8 @@ public class Bandit extends Character {
         this.bounties.add(b);
     }
 
+    public List<Bounty> getBounty(){return this.bounties;}
+
     public int getMoney() {
         int sum = 0;
         for (Bounty b : this.bounties) {
