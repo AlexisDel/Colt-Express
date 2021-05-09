@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class GameDisplay extends JFrame {
 
-    private GameEngine gameEngine;
-    private BoardG boardG;
+    private final GameEngine gameEngine;
+    private final BoardG boardG;
     public Buttons buttons;
 
     /**

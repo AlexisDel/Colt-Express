@@ -16,21 +16,28 @@ public class Entity {
         this.y = ord;
         this.train = train;
     }
+
     /**
      * Gets the type of the entity
+     *
      * @return String type
      */
     public String getType() {
         return type;
     }
+
     /**
      * Gets the x coordinate of the entity
+     *
      * @return int x coordinate
      */
-    public int getX() { return this.x; }
+    public int getX() {
+        return this.x;
+    }
 
     /**
      * Gets the y coordinate of the entity
+     *
      * @return int y coordinate
      */
     public int getY() {

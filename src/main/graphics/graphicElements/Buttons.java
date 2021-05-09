@@ -9,16 +9,16 @@ import java.awt.event.ActionListener;
 
 public class Buttons extends JPanel {
 
-    private JButton up = new JButton("Haut");
-    private JButton down = new JButton("Bas");
-    private JButton left = new JButton("Gauche");
-    private JButton right = new JButton("Droite");
-    private JButton shootUp = new JButton("Tire Haut");
-    private JButton shootDown = new JButton("Tire Bas");
-    private JButton shootRight = new JButton("Tire Droite");
-    private JButton shootLeft = new JButton("Tire Gauche");
-    private JButton rob = new JButton("Braque");
-    private JButton action = new JButton("Action !");
+    private final JButton up = new JButton("Haut");
+    private final JButton down = new JButton("Bas");
+    private final JButton left = new JButton("Gauche");
+    private final JButton right = new JButton("Droite");
+    private final JButton shootUp = new JButton("Tire Haut");
+    private final JButton shootDown = new JButton("Tire Bas");
+    private final JButton shootRight = new JButton("Tire Droite");
+    private final JButton shootLeft = new JButton("Tire Gauche");
+    private final JButton rob = new JButton("Braque");
+    private final JButton action = new JButton("Action !");
 
     public Buttons(GameController gameController) {
 

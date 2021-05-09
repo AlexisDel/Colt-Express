@@ -1,7 +1,7 @@
 package main.controller;
 
-import main.engine.utils.Action;
 import main.engine.GameEngine;
+import main.engine.utils.Action;
 import main.engine.utils.GameState;
 
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ public class GameController {
     private final int NB_ACTIONS;
     private final int NB_PLAYERS;
 
-    private GameEngine gameEngine;
+    private final GameEngine gameEngine;
 
-    private List<Action> actions;
+    private final List<Action> actions;
     private boolean actionsReady;
 
     /**

@@ -21,8 +21,9 @@ public class GameEngine {
     public boolean isGameFinished;
     public GameState gameState;
 
-    private Train train;
+    private final Train train;
     private boolean actionButtonPushed;
+
     /**
      * Returns GameEngine object
      * Manages game logic and mechanics
@@ -38,8 +39,10 @@ public class GameEngine {
         this.gameController = new GameController(this);
         this.gameDisplay = new GameDisplay(this);
     }
+
     /**
      * Gets the GameEngine's train
+     *
      * @return Train
      */
     public Train getTrain() {
@@ -99,6 +102,7 @@ public class GameEngine {
 
     /**
      * Verifies for each bandit if all actions in his actions list have been executed (actions list is empty)
+     *
      * @param b list of bandits
      * @return boolean
      */
@@ -114,6 +118,7 @@ public class GameEngine {
     /**
      * Gives each player's bandit its actions list
      * from an input actionList (passed by gameController in GameEngine update method)
+     *
      * @param actionList the action list containing all actions for all player's bandits
      */
     public void setupPlayersActions(List<Action> actionList) {
@@ -126,6 +131,7 @@ public class GameEngine {
             }
         }
     }
+
     /**
      * Enables or disables the action/planning control buttons (used by the graphic classes)
      */
@@ -133,12 +139,12 @@ public class GameEngine {
         if (gameController.getActions().size() < 4) {
             gameDisplay.buttons.enableActionsButtons();
             gameDisplay.buttons.disableActionButton();
-        }
-        else {
+        } else {
             gameDisplay.buttons.disableActionsButtons();
             gameDisplay.buttons.enableActionButton();
         }
     }
+
     /**
      * Updates the game engine, main update method repeated in each game loop in the Game class
      */
@@ -156,8 +162,7 @@ public class GameEngine {
                 }
                 actionButtonPushed = false;
             }
-        }
-        else {
+        } else {
             //Planning State
             setupPlayersActions(gameController.getActions());
         }

@@ -4,7 +4,7 @@ import main.engine.utils.Direction;
 
 public class Character extends Entity {
 
-    private String name;
+    private final String name;
 
     /**
      * Returns a Character Object with a name,
@@ -14,6 +14,7 @@ public class Character extends Entity {
         super(type, train, abs, ord);
         this.name = name;
     }
+
     /**
      * Returns a Character Object without a name (name being set to the same String as type)
      */
@@ -21,8 +22,10 @@ public class Character extends Entity {
         super(type, train, abs, ord);
         this.name = type;
     }
+
     /**
      * Gets the name of the character
+     *
      * @return String name of the character
      */
     public String getName() {
@@ -31,42 +34,45 @@ public class Character extends Entity {
 
     /**
      * Moves a character in a specific direction by accessing and modifying its coordinates
+     *
      * @param direction enumerate type Direction
      */
     public void move(Direction direction) {
 
         //disables Marshall notifications in the run terminal
-        boolean notify=true;
-        if(this.name=="Marshall"){notify=false;}
+        boolean notify = true;
+        if (this.name == "Marshall") {
+            notify = false;
+        }
 
         //the main code of the method
         switch (direction) {
             case LEFT -> {
                 if (this.x > 0) {
                     this.x--;
-                    if(notify)
-                    System.out.println(this.name + " has moved left");
+                    if (notify)
+                        System.out.println(this.name + " has moved left");
                 }
             }
             case RIGHT -> {
                 if (this.x < this.train.getTrainLength() - 1) {
                     this.x++;
-                    if(notify)
-                    System.out.println(this.name + " has moved right");
+                    if (notify)
+                        System.out.println(this.name + " has moved right");
                 }
             }
             case UP -> {
                 if (this.y == 1) {
                     this.y--;
-                    if(notify)
-                    System.out.println(this.name + " has moved up");
+                    if (notify)
+                        System.out.println(this.name + " has moved up");
                 }
             }
             case DOWN -> {
                 if (this.y == 0) {
                     this.y++;
-                    if(notify)
-                    System.out.println(this.name + " has moved down");
+                    if (notify)
+                        System.out.println(this.name + " has moved down");
                 }
             }
 

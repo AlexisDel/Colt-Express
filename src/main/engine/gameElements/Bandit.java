@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Bandit extends Character {
-    private ArrayList<Bounty> bounties;
-    private List<Action> actions;
+    private final ArrayList<Bounty> bounties;
+    private final List<Action> actions;
     private int bullets;
+
     /**
      * returns Bandit object
      */
@@ -18,9 +19,10 @@ public class Bandit extends Character {
         super(type, name, train, abs, ord);
         this.bounties = new ArrayList<>();
         this.actions = new ArrayList<>();
-        this.bullets=5;
+        this.bullets = 5;
 
     }
+
     /**
      * Adds a bounty to the list of bounties
      */
@@ -30,12 +32,16 @@ public class Bandit extends Character {
 
     /**
      * Returns the list of bounties
+     *
      * @return List<Bounty>
      */
-    public List<Bounty> getBounty(){return this.bounties;}
+    public List<Bounty> getBounty() {
+        return this.bounties;
+    }
 
     /**
      * Returns the sum of the value of all bounties in the list of bounties
+     *
      * @return int
      */
     public int getMoney() {
@@ -48,12 +54,16 @@ public class Bandit extends Character {
 
     /**
      * Returns the attribute bullets
+     *
      * @return int
      */
-    public int getBullets(){return this.bullets;}
+    public int getBullets() {
+        return this.bullets;
+    }
 
     /**
      * Returns the list of actions
+     *
      * @return List<Action>
      */
     public List<Action> getActions() {
@@ -70,31 +80,35 @@ public class Bandit extends Character {
     /**
      * Clears the list of actions
      */
-    public void clearActions(){this.actions.clear();}
+    public void clearActions() {
+        this.actions.clear();
+    }
 
     /**
      * Makes the bandit rob a random bounty from the train at his current position
      */
     public void rob() {
         //randomly pick one bounty from all available at bandit position
-        if(this.train.getBountyAt(this.getX(),this.getY()).size()>0) {
+        if (this.train.getBountyAt(this.getX(), this.getY()).size() > 0) {
             Random r = new Random();
-            int randomBountyIndex = r.nextInt(this.train.getBountyAt(this.getX(),this.getY()).size());
+            int randomBountyIndex = r.nextInt(this.train.getBountyAt(this.getX(), this.getY()).size());
             //rob it
-            Bounty selectedBounty = this.train.getBountyAt(this.getX(),this.getY()).get(randomBountyIndex);
+            Bounty selectedBounty = this.train.getBountyAt(this.getX(), this.getY()).get(randomBountyIndex);
             //pick it from the train and puts it in his pocket
             this.addBounty(selectedBounty);
             this.train.removeEntity(selectedBounty);
             System.out.println(this.getName() + " has just robbed !");
         }
     }
+
     /**
      * Makes the bandit shoot in a specific direction
+     *
      * @param d a direction from the enumerate type Direction
      */
     public void shoot(Direction d) {
         //If the bandit has bullets allow him to shoot
-        if(this.bullets>0) {
+        if (this.bullets > 0) {
             //if bandit shoots, reduce his bullets by one
             this.bullets--;
             //Extract the bandits that are valid targets (All but himself)
@@ -143,11 +157,12 @@ public class Bandit extends Character {
                     }
                 }
             }
-        }else{
+        } else {
             //If the bandit has no more bullets announce it:
-            System.out.println(this.getName()+" ran out of bullets");
+            System.out.println(this.getName() + " ran out of bullets");
         }
     }
+
     /**
      * Makes the bandit drop a random bounty from his bounties back on the train
      */
@@ -166,8 +181,10 @@ public class Bandit extends Character {
             this.train.addEntity(selectedBounty);
         }
     }
+
     /**
      * Executes an action (Move, Shoot, Rob) for the bandit
+     *
      * @param a action from the enumerate type Action
      */
     public void doAction(Action a) {

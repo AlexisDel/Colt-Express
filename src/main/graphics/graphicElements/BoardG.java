@@ -1,7 +1,8 @@
 package main.graphics.graphicElements;
 
 import main.engine.GameEngine;
-import main.engine.gameElements.*;
+import main.engine.gameElements.Entity;
+import main.engine.gameElements.Train;
 import main.graphics.utils.Positions;
 import main.graphics.utils.TextDisplay;
 
@@ -17,8 +18,8 @@ import java.io.IOException;
  */
 public class BoardG extends JPanel {
 
-    private Train train;
-    private GameEngine gameEngine;
+    private final Train train;
+    private final GameEngine gameEngine;
     private boolean startScreen;
 
     // Positions & Sizes

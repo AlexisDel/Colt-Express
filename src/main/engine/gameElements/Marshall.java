@@ -5,7 +5,7 @@ import main.engine.utils.Direction;
 import java.util.Random;
 
 public class Marshall extends Character {
-    private float NERVOSITE_MARSHALL;
+    private final float NERVOSITE_MARSHALL;
 
     /**
      * Returns a Marshall Object
@@ -49,10 +49,11 @@ public class Marshall extends Character {
             }
         }
     }
+
     /**
      * moves the marshall and verifies if it can catch a bandit at his new position
      */
-    public void update(){
+    public void update() {
         autoMove();
         catchBandit();
     }
