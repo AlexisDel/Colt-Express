@@ -58,9 +58,7 @@ public class GameEngine {
      */
     public void setupEntities(String[] playerNames) {
         //Spawns the bounty
-        //genBounty();
-        Bounty test= new Bounty("Treasure", train, 0,9999);
-        this.train.addEntity(test);
+        genBounty();
         //Setup all player's bandits with random positions
         int randomPos;
         for (int i = 0; i < playerNames.length; i++) {

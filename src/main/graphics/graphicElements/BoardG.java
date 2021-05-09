@@ -21,6 +21,7 @@ public class BoardG extends JPanel {
     private final Train train;
     private final GameEngine gameEngine;
     private boolean startScreen;
+    private boolean endScreen;
 
     // Positions & Sizes
     private final int PANEL_WIDTH = 1000;
@@ -59,6 +60,7 @@ public class BoardG extends JPanel {
         this.train = train;
         this.gameEngine = gameEngine;
         this.startScreen = true;
+        this.endScreen = false;
 
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.red);
@@ -176,6 +178,12 @@ public class BoardG extends JPanel {
         }
     }
 
+    public void drawEndGameScreen(Graphics2D g2D){
+        g2D.setFont(this.font.deriveFont(Font.BOLD, 60));
+        g2D.setPaint(Color.gray);
+        TextDisplay.drawCenteredString(g2D, gameEngine.getWinner() + " WINS", new Rectangle(MAIN_HUD_X, 100, MAIN_HUD_WIDTH, MAIN_HUD_HEIGHT));
+    }
+
     public void paint(Graphics g) {
 
         Graphics2D g2D = (Graphics2D) g;
@@ -187,11 +195,22 @@ public class BoardG extends JPanel {
         } else {
             updateXAnimation();
             drawEntities(g2D);
-            drawHUD(g2D);
+            if (endScreen){
+                drawEndGameScreen(g2D);
+            } else {
+                drawHUD(g2D);
+            }
         }
     }
 
     public void update() {
         this.repaint();
+    }
+
+    /**
+     * Display Winner name when the game is finished
+     */
+    public void endGameScreen() {
+        this.endScreen = true;
     }
 }

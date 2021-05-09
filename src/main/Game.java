@@ -33,7 +33,8 @@ public class Game {
                     }
                 }
                 else{
-                    System.out.println("WINNER IS:"+ gameEngine.getWinner());
+                    gameEngine.gameDisplay.boardG.endGameScreen();
+                    gameEngine.gameDisplay.update();
                 }
             }
         }, 0, 20);
