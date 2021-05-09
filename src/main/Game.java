@@ -9,6 +9,9 @@ public class Game {
 
     public static int tickMarshall = 0;
 
+    /**
+     * Main game loop
+     */
     public static void main(String[] args) {
 
         GameEngine gameEngine = new GameEngine();
@@ -22,7 +25,7 @@ public class Game {
                     // Updates gameEngine every 20 ms
                     gameEngine.update();
 
-                    // Moves the marshal every seconds
+                    // Moves the marshal every 50 seconds
                     tickMarshall++;
                     if (tickMarshall == 50) {
                         tickMarshall = 0;

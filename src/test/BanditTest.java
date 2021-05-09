@@ -1,5 +1,7 @@
 package test;
 
+import main.engine.gameElements.Marshall;
+import main.engine.utils.Action;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +54,7 @@ class BanditTest {
         testSubject.dropBounty();
         assertEquals(0, testSubject.getBounty().size());
 
-        //Scenario: Bandits move and then steal
+        //Scenario: Bandits move and then robs some bounty
         Train testTrain2 = new Train();
         Bandit testSubject1 = new Bandit("bandit1", "Pierre", testTrain2, 0, 0);
         Bandit testSubject2 = new Bandit("bandit2", "Kemper", testTrain2, 2, 0);
@@ -87,7 +89,7 @@ class BanditTest {
 
         assertEquals(1, testSubject1.getBounty().size());
         assertEquals(1, testSubject2.getBounty().size());
-
+        //New scenario
         Train testTrain3 = new Train();
         Bandit testSubject3 = new Bandit("bandit1", "Pierre", testTrain3, 2, 0);
         Bandit testSubject4 = new Bandit("bandit2", "Kemper", testTrain3, 2, 0);
@@ -147,9 +149,6 @@ class BanditTest {
         assertEquals(4, testSubject1.getBullets());
         assertEquals(4, testSubject2.getBullets());
 
-
-        System.out.println("NEW SCENARIO");
-
         Bounty b1 = new Bounty("treasure", testTrain, 0, 1000);
         Bounty b2 = new Bounty("treasure", testTrain, 2, 1000);
         Bounty b12 = new Bounty("bag", testTrain, 0, 200);
@@ -178,7 +177,6 @@ class BanditTest {
         assertEquals(4, testSubject2.getBullets());
 
         //Move one bandit to the roof of the train and shooting in both UP and DOWN direction:
-        System.out.println("NEW SCENARIO");
         testSubject1.move(Direction.UP);
 
         assertEquals(2, testSubject1.getX());
@@ -195,8 +193,6 @@ class BanditTest {
         assertEquals(3, testSubject2.getBullets());
 
         //Move both bandits to the roof of the train and shooting UP:
-
-        System.out.println("NEW SCENARIO");
         testSubject2.move(Direction.UP);
 
         assertEquals(2, testSubject1.getX());
@@ -233,16 +229,15 @@ class BanditTest {
         assertEquals(0, testSubject2.getBounty().size());
         assertEquals(0, testSubject1.getBullets());
         assertEquals(0, testSubject2.getBullets());
-
-
     }
 
 
     /**
-     * Tests the move action for the bandit and other complementary methods
+     * Tests the move action for the bandit and other special situations that uses different actions.
      */
     @Test
     void doAction() {
+        //Test the move actions
         Train testTrain = new Train();
         Bandit testSubject = new Bandit("bandit1", "Pierre", testTrain, 0, 0);
         testSubject.move(Direction.LEFT);
@@ -273,6 +268,32 @@ class BanditTest {
         testSubject.move(Direction.UP);
         assertEquals(3, testSubject.getX());
         assertEquals(0, testSubject.getY());
+
+        //Testing special situations with marshall, bounty, bandits, shooting and robbing:
+        Train testTrain0 = new Train();
+        Bandit testSubject1 = new Bandit("bandit1", "Manson", testTrain0, 0, 1);
+        Bandit testSubject2 = new Bandit("bandit1", "Kemper", testTrain0, 0, 1);
+        testTrain0.addEntity(testSubject1);
+        testTrain0.addEntity(testSubject2);
+        Marshall marshall= new Marshall(testTrain0,1);
+        testTrain0.addEntity(marshall);
+        // setting up all the loot in x=0 and x=2
+        Bounty b1 = new Bounty("treasure", testTrain0, 0, 1000);
+        Bounty b2 = new Bounty("bag", testTrain0, 2, 1000);
+        Bounty b12 = new Bounty("bag", testTrain0, 0, 200);
+        Bounty b22 = new Bounty("bag", testTrain0, 2, 100);
+        Bounty b123 = new Bounty("jewel", testTrain0, 0, 500);
+        Bounty b223 = new Bounty("jewel", testTrain0, 2, 500);
+        testTrain0.addEntity(b1);
+        testTrain0.addEntity(b2);
+        testTrain0.addEntity(b12);
+        testTrain0.addEntity(b22);
+        testTrain0.addEntity(b123);
+        testTrain0.addEntity(b223);
+
+        testSubject1.doAction(Action.ROB);
+        testSubject2.doAction(Action.ROB);
+
 
     }
 }

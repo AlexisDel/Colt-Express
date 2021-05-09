@@ -1,10 +1,7 @@
 package main.engine;
 
 import main.controller.GameController;
-import main.engine.gameElements.Bandit;
-import main.engine.gameElements.Bounty;
-import main.engine.gameElements.Marshall;
-import main.engine.gameElements.Train;
+import main.engine.gameElements.*;
 import main.engine.utils.Action;
 import main.engine.utils.GameState;
 import main.graphics.GameDisplay;
@@ -61,7 +58,9 @@ public class GameEngine {
      */
     public void setupEntities(String[] playerNames) {
         //Spawns the bounty
-        genBounty();
+        //genBounty();
+        Bounty treasure= new Bounty("Treasure", this.train, this.train.getTrainLength()-1,1000);
+        this.train.addEntity(treasure);
         //Setup all player's bandits
         for (int i = 0; i < playerNames.length; i++) {
             Bandit player = new Bandit(("Bandit" + i), playerNames[i], this.train, i % this.train.getTrainLength(), 0);
@@ -144,6 +143,18 @@ public class GameEngine {
             gameDisplay.buttons.enableActionButton();
         }
     }
+    /**
+     * Verifies if the game has finished by verifying endgame conditions
+     */
+    public void verifyEndConditions(){
+        int countBounties=0;
+        for(Entity e: this.train.getEntities()){
+            if(e instanceof Bounty){
+                countBounties++;
+            }
+        }
+        if(countBounties==0){this.isGameFinished=true;}
+    }
 
     /**
      * Updates the game engine, main update method repeated in each game loop in the Game class
@@ -155,6 +166,7 @@ public class GameEngine {
                 for (Bandit b : this.train.getBandits()) {
                     b.update();
                     this.train.getMarshall().catchBandit();
+                    verifyEndConditions();
                 }
                 if (allActionsExecuted(this.train.getBandits())) {
                     gameState = GameState.PLANNING;
