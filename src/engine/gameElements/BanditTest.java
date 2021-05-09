@@ -61,6 +61,20 @@ class BanditTest {
         testTrain2.addEntity(b12);
         testTrain2.addEntity(b22);
 
+        testSubject1.rob();
+        testSubject2.rob();
+
+        assertEquals(0,testSubject1.getBounty().size());
+        assertEquals(0,testSubject2.getBounty().size());
+
+        testSubject1.rob();
+        testSubject2.rob();
+        testSubject1.rob();
+        testSubject2.rob();
+
+        assertEquals(0,testSubject1.getBounty().size());
+        assertEquals(0,testSubject2.getBounty().size());
+
         testSubject1.move(Direction.DOWN);
         testSubject2.move(Direction.DOWN);
         testSubject1.rob();
@@ -222,5 +236,36 @@ class BanditTest {
     //Used to test the move action
     @Test
     void doAction() {
+        Train testTrain= new Train();
+        Bandit testSubject= new Bandit("bandit1", "Pierre", testTrain,0,0);
+        testSubject.move(Direction.LEFT);
+        assertEquals(0,testSubject.getX());
+        assertEquals(0,testSubject.getY());
+
+        testSubject.move(Direction.DOWN);
+        testSubject.move(Direction.LEFT);
+        assertEquals(0,testSubject.getX());
+        assertEquals(1,testSubject.getY());
+
+        testSubject.move(Direction.RIGHT);
+        testSubject.move(Direction.RIGHT);
+        testSubject.move(Direction.RIGHT);
+        testSubject.move(Direction.RIGHT);
+        testSubject.move(Direction.RIGHT);
+        assertEquals(3,testSubject.getX());
+        assertEquals(1,testSubject.getY());
+
+        testSubject.move(Direction.DOWN);
+        testSubject.move(Direction.DOWN);
+        testSubject.move(Direction.DOWN);
+        assertEquals(3,testSubject.getX());
+        assertEquals(1,testSubject.getY());
+
+        testSubject.move(Direction.UP);
+        testSubject.move(Direction.UP);
+        testSubject.move(Direction.UP);
+        assertEquals(3,testSubject.getX());
+        assertEquals(0,testSubject.getY());
+
     }
 }
