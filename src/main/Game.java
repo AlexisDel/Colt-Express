@@ -7,30 +7,29 @@ import java.util.TimerTask;
 
 public class Game {
 
+    public static int tickMarshall = 0;
+
     public static void main(String[] args) {
 
         GameEngine gameEngine = new GameEngine();
 
-
-        // Update gameEngine every 100 ms
         Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!gameEngine.isGameFinished){
+                if (!gameEngine.isGameFinished) {
+
+                    // Updates gameEngine every 20 ms
                     gameEngine.update();
+
+                    // Moves the marshal every seconds
+                    tickMarshall++;
+                    if (tickMarshall == 50) {
+                        tickMarshall = 0;
+                        gameEngine.getTrain().getMarshall().update();
+                    }
                 }
             }
         }, 0, 20);
-
-        Timer t2 = new Timer();
-        t2.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!gameEngine.isGameFinished){
-                    gameEngine.getTrain().getMarshall().update();
-                }
-            }
-        }, 0, 1000);
     }
 }

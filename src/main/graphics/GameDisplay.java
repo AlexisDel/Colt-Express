@@ -16,6 +16,7 @@ public class GameDisplay extends JFrame {
     /**
      * Returns a GameDisplay object
      * Manages GUI
+     *
      * @param gameEngine
      */
     public GameDisplay(GameEngine gameEngine) {
@@ -32,6 +33,7 @@ public class GameDisplay extends JFrame {
 
         // Window settings
         this.setTitle("Colt Express");
+        this.setIconImage(new ImageIcon("ressources/icon.jpg").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setResizable(false);
