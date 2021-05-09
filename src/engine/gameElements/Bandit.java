@@ -11,7 +11,9 @@ public class Bandit extends Character {
     private ArrayList<Bounty> bounties;
     private List<Action> actions;
     private int bullets;
-
+    /**
+     * returns Bandit object
+     */
     public Bandit(String type, String name, Train train, int abs, int ord) {
         super(type, name, train, abs, ord);
         this.bounties = new ArrayList<>();
@@ -19,13 +21,23 @@ public class Bandit extends Character {
         this.bullets=5;
 
     }
-
+    /**
+     * Adds a bounty to the list of bounties
+     */
     public void addBounty(Bounty b) {
         this.bounties.add(b);
     }
 
+    /**
+     * Returns the list of bounties
+     * @return List<Bounty>
+     */
     public List<Bounty> getBounty(){return this.bounties;}
 
+    /**
+     * Returns the sum of the value of all bounties in the list of bounties
+     * @return int
+     */
     public int getMoney() {
         int sum = 0;
         for (Bounty b : this.bounties) {
@@ -34,20 +46,37 @@ public class Bandit extends Character {
         return sum;
     }
 
+    /**
+     * Returns the attribute bullets
+     * @return int
+     */
     public int getBullets(){return this.bullets;}
 
+    /**
+     * Returns the list of actions
+     * @return List<Action>
+     */
     public List<Action> getActions() {
         return this.actions;
     }
 
+    /**
+     * Adds an action to the list of actions
+     */
     public void addAction(Action a) {
         if (this.actions.size() < 2) this.actions.add(a);
     }
 
+    /**
+     * Clears the list of actions
+     */
     public void clearActions(){this.actions.clear();}
 
+    /**
+     * Makes the bandit rob a random bounty from the train at his current position
+     */
     public void rob() {
-        //randomly pick one
+        //randomly pick one bounty from all available at bandit position
         if(this.train.getBountyAt(this.getX(),this.getY()).size()>0) {
             Random r = new Random();
             int randomBountyIndex = r.nextInt(this.train.getBountyAt(this.getX(),this.getY()).size());
@@ -59,12 +88,16 @@ public class Bandit extends Character {
             System.out.println(this.getName() + " has just robbed !");
         }
     }
-
+    /**
+     * Makes the bandit shoot in a specific direction
+     * @param d a direction from the enumerate type Direction
+     */
     public void shoot(Direction d) {
+        //If the bandit has bullets allow him to shoot
         if(this.bullets>0) {
             //if bandit shoots, reduce his bullets by one
             this.bullets--;
-            //Extract the bandits that are valid targets
+            //Extract the bandits that are valid targets (All but himself)
             List<Bandit> targets = new ArrayList<>();
             for (Bandit b : this.train.getBandits()) {
                 if (!b.equals(this)) {
@@ -76,6 +109,7 @@ public class Bandit extends Character {
                 case LEFT -> {
                     for (Bandit b : targets) {
                         if (this.y == b.getY() && this.x > b.getX()) {
+                            //if a target is found make him drop his bounty
                             b.dropBounty();
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
@@ -84,6 +118,7 @@ public class Bandit extends Character {
                 case RIGHT -> {
                     for (Bandit b : targets) {
                         if (this.y == b.getY() && this.x < b.getX()) {
+                            //if a target is found make him drop his bounty
                             b.dropBounty();
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
@@ -92,6 +127,7 @@ public class Bandit extends Character {
                 case UP -> {
                     for (Bandit b : targets) {
                         if ((this.x == b.getX() && this.y > b.getY()) || (this.x == b.getX() && this.y == b.getY() && this.y == 0)) {
+                            //if a target is found make him drop his bounty
                             b.dropBounty();
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
@@ -100,6 +136,7 @@ public class Bandit extends Character {
                 case DOWN -> {
                     for (Bandit b : targets) {
                         if ((this.x == b.getX() && this.y < b.getY()) || (this.x == b.getX() && this.y == b.getY() && this.y == 1)) {
+                            //if a target is found make him drop his bounty
                             b.dropBounty();
                             System.out.println(this.getName() + " shot " + b.getName());
                         }
@@ -107,21 +144,32 @@ public class Bandit extends Character {
                 }
             }
         }else{
+            //If the bandit has no more bullets announce it:
             System.out.println(this.getName()+" ran out of bullets");
         }
     }
-
+    /**
+     * Makes the bandit drop a random bounty from his bounties back on the train
+     */
     public void dropBounty() {
+        //if bandit had bounties
         if (this.bounties.size() > 0) {
+            //pick a random bounty
             Random r = new Random();
             int randomBountyIndex = r.nextInt(this.bounties.size());
             Bounty selectedBounty = this.bounties.get(randomBountyIndex);
+            //remove the randomly picked bounty from his bounties
             this.bounties.remove(selectedBounty);
+            //put the bounty back on the train on the bandit's position
             selectedBounty.moveTo(this.x, this.y);
+            //Adds the bounty back again to the train entities
             this.train.addEntity(selectedBounty);
         }
     }
-
+    /**
+     * Executes an action (Move, Shoot, Rob) for the bandit
+     * @param a action from the enumerate type Action
+     */
     public void doAction(Action a) {
 
         switch (a) {
@@ -157,6 +205,11 @@ public class Bandit extends Character {
         }
     }
 
+    /**
+     * Updates the bandit in the main game loop,
+     * executing the bandits actions one every iteration of the loop
+     * until all the actions in the bandit's actions list have been executed
+     */
     public void update() {
         //if the list is not empty
         if (this.actions.size() > 0) {

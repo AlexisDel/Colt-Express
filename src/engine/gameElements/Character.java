@@ -6,27 +6,40 @@ public class Character extends Entity {
 
     private String name;
 
+    /**
+     * Returns a Character Object with a name,
+     * mainly used as parent class (To factorize code) and will not be instantiated at any point
+     */
     Character(String type, String name, Train train, int abs, int ord) {
         super(type, train, abs, ord);
         this.name = name;
     }
-
+    /**
+     * Returns a Character Object without a name (name being set to the same String as type)
+     */
     Character(String type, Train train, int abs, int ord) {
         super(type, train, abs, ord);
         this.name = type;
     }
-
+    /**
+     * Gets the name of the character
+     * @return String name of the character
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Moves a character in a specific direction by accessing and modifying its coordinates
+     * @param direction enumerate type Direction
+     */
     public void move(Direction direction) {
 
-        //TODO: UNIT TESTS
-        //disables Marshall notifications
+        //disables Marshall notifications in the run terminal
         boolean notify=true;
         if(this.name=="Marshall"){notify=false;}
 
+        //the main code of the method
         switch (direction) {
             case LEFT -> {
                 if (this.x > 0) {
