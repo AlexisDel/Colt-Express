@@ -1,6 +1,13 @@
 # Colt Express
 
-## 
+## Nota bene
+
+:warning: Java 15 est nécessaire pour build et run ce projet
+Open JDK 15 est téléchargable à cette adresse : https://jdk.java.net/archive/
+
+Pour lancer le jeu :
+`java -jar ColtExpress.jar`
+
 
 ## Implémentations
 
