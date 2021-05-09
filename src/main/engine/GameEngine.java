@@ -58,7 +58,9 @@ public class GameEngine {
      */
     public void setupEntities(String[] playerNames) {
         //Spawns the bounty
-        genBounty();
+        //genBounty();
+        Bounty test= new Bounty("Treasure", train, 0,9999);
+        this.train.addEntity(test);
         //Setup all player's bandits with random positions
         int randomPos;
         for (int i = 0; i < playerNames.length; i++) {
@@ -122,11 +124,10 @@ public class GameEngine {
      */
     public void setupPlayersActions(List<Action> actionList) {
         if (actionList.size() != 0) {
-
             int NB_PLAYERS = this.train.getBandits().size();
             for (int i = 0; i < NB_PLAYERS; i++) {
-                this.train.getBandits().get(i).addAction(actionList.get(i * NB_PLAYERS + 0));
-                this.train.getBandits().get(i).addAction(actionList.get(i * NB_PLAYERS + 1));
+                this.train.getBandits().get(i).addAction(actionList.get(i * 2));
+                this.train.getBandits().get(i).addAction(actionList.get(i * 2 + 1));
             }
         }
     }
@@ -154,6 +155,16 @@ public class GameEngine {
             }
         }
         if(countBounties==0){this.isGameFinished=true;}
+    }
+
+    public String getWinner(){
+        Bandit winner=this.train.getBandits().get(0);
+        for(Bandit b: this.train.getBandits()) {
+            if (b.getMoney() > winner.getMoney()) {
+                winner = b;
+            }
+        }
+        return winner.getName();
     }
 
     /**

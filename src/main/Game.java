@@ -32,6 +32,9 @@ public class Game {
                         gameEngine.getTrain().getMarshall().update();
                     }
                 }
+                else{
+                    System.out.println("WINNER IS:"+ gameEngine.getWinner());
+                }
             }
         }, 0, 20);
     }

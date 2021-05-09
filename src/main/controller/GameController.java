@@ -89,7 +89,8 @@ public class GameController {
      */
     public String getPlayerTurnAsString() {
         if (getClickLeftPerPlayer() != 0) {
-            return "Player " + getPlayerTurn() + "'s turn";
+            if(getPlayerTurn()==1) return "Brown Bandit's turn";
+            else return "Black Bandit's turn";
         } else {
             return null;
         }
