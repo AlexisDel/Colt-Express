@@ -1,4 +1,4 @@
-package engine;
+package main.engine.utils;
 
 public enum GameState {
     PLANNING,

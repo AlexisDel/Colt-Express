@@ -1,9 +1,9 @@
-package graphics;
+package main.graphics.graphicElements;
 
-import engine.GameEngine;
-import engine.gameElements.*;
-import graphics.utils.Positions;
-import graphics.utils.TextDisplay;
+import main.engine.GameEngine;
+import main.engine.gameElements.*;
+import main.graphics.utils.Positions;
+import main.graphics.utils.TextDisplay;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

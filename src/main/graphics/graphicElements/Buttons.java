@@ -1,6 +1,6 @@
-package graphics;
+package main.graphics.graphicElements;
 
-import controller.GameController;
+import main.controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;

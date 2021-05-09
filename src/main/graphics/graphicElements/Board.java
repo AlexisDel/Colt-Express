@@ -1,7 +1,7 @@
-package graphics;
+package main.graphics.graphicElements;
 
-import engine.gameElements.Train;
-import engine.gameElements.Entity;
+import main.engine.gameElements.Train;
+import main.engine.gameElements.Entity;
 
 
 import javax.swing.*;
