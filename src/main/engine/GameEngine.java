@@ -24,7 +24,8 @@ public class GameEngine {
     private Train train;
     private boolean actionButtonPushed;
     /**
-     * returns GameEngine object
+     * Returns GameEngine object
+     * Manages game logic and mechanics
      */
     public GameEngine() {
         this.actionButtonPushed = false;

@@ -14,8 +14,8 @@ public class GameDisplay extends JFrame {
     public Buttons buttons;
 
     /**
-     * Handles GUI
-     *
+     * Returns a GameDisplay object
+     * Manages GUI
      * @param gameEngine
      */
     public GameDisplay(GameEngine gameEngine) {

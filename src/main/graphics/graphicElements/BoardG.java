@@ -11,6 +11,10 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Returns a BoardG object
+ * Graphical display of the game
+ */
 public class BoardG extends JPanel {
 
     private Train train;

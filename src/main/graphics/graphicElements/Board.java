@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Text based display
+ * Text based display of the game
  * NOT USED IN THE FINAL VERSION
  */
 public class Board extends JPanel {
