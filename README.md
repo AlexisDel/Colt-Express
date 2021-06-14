@@ -1,13 +1,11 @@
-# Colt Express
+# Projet POGL S4 "Colt Express"
+
+![colt-express](https://user-images.githubusercontent.com/22059248/121907524-6adc2700-cd2c-11eb-85a6-420d68069e09.png)
 
 ## Nota bene
 
 :warning: Java 15 est nécessaire pour build et run ce projet.
 Open JDK 15 est téléchargable à cette adresse : https://jdk.java.net/archive/
-
-Pour lancer le jeu :
-`java -jar ColtExpress.jar`
-
 
 ## Implémentations
 
